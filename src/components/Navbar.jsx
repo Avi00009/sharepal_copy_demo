@@ -189,25 +189,27 @@ export default function Navbar({
         </div>
 
         {/* Mobile View */}
-        <div id="sp-mobile-header" style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '8px 0' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div id="sp-mobile-header" style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '0 0 8px 0' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
             <a
               href="#"
+              className="sp-logo-badge-mobile"
               style={{
                 background: '#1945E8',
-                borderRadius: '8px',
-                padding: '6px 14px',
+                padding: '8px 16px 10px 16px',
+                borderRadius: '0 0 14px 14px',
                 display: 'inline-flex',
                 alignItems: 'center',
-                boxShadow: '0 4px 12px rgba(25, 69, 232, 0.35)',
+                justifyContent: 'center',
+                boxShadow: '0 4px 14px rgba(25, 69, 232, 0.35)',
                 textDecoration: 'none'
               }}
               title="SharePal Home"
             >
-              <SharePalLogo height={20} />
+              <SharePalLogo height={21} />
             </a>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingTop: '6px' }}>
               <button
                 type="button"
                 onClick={onOpenCityModal}

@@ -167,6 +167,25 @@ img {
   background: #143AC7;
 }
 
+.sp-logo-badge-mobile {
+  background: #1945E8;
+  padding: 8px 16px 10px 16px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(25, 69, 232, 0.35);
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+
+.sp-logo-badge-mobile:hover {
+  background: #143AC7;
+}
+
 .sp-header-center {
   display: flex;
   align-items: center;
