@@ -1,11 +1,16 @@
 import React from 'react';
 
-export default function WhatsAppFloat() {
-  const handleClick = () => {
-    window.open(
-      'https://api.whatsapp.com/send?phone=+917619220543&text=Hi%20SharePal,%20I%20have%20a%20query%20regarding%20renting%20gaming%20gadgets',
-      '_blank'
-    );
+export default function WhatsAppFloat({ onOpenChatbot }) {
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (onOpenChatbot) {
+      onOpenChatbot();
+    } else {
+      window.open(
+        'https://api.whatsapp.com/send?phone=+917619220543&text=Hi%20SharePal,%20I%20have%20a%20query%20regarding%20renting%20gaming%20gadgets',
+        '_blank'
+      );
+    }
   };
 
   return (
@@ -14,10 +19,10 @@ export default function WhatsAppFloat() {
       onClick={handleClick}
       role="button"
       tabIndex={0}
-      title="Chat with Us on WhatsApp"
+      title="Chat with Us"
       aria-label="Chat Support"
     >
-      {/* Optional Hover Badge */}
+      {/* Hover Badge */}
       <div className="sp-chat-tooltip">Chat with Us</div>
 
       {/* Official SharePal Floating Dual Chat Bubbles SVG */}

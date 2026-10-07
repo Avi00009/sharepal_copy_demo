@@ -20,6 +20,7 @@ import WhatsAppFloat from './components/WhatsAppFloat';
 import MobileBottomNav from './components/MobileBottomNav';
 import LoginModal from './components/LoginModal';
 import OfferBannerCarousel from './components/OfferBannerCarousel';
+import ChatbotModal from './components/ChatbotModal';
 import StickySubcategorySidebar from './components/StickySubcategorySidebar';
 import EarnCreditsBar from './components/EarnCreditsBar';
 import RentOutGearBanner from './components/RentOutGearBanner';
@@ -63,6 +64,7 @@ export default function App() {
   const [isDateModalOpen, setIsDateModalOpen] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [detailProduct, setDetailProduct] = useState(null);
 
   // User Authentication
@@ -388,8 +390,8 @@ export default function App() {
         onOpenDateModal={() => setIsDateModalOpen(true)}
       />
 
-      {/* 14. Sticky WhatsApp Support Button */}
-      <WhatsAppFloat />
+      {/* 14. Sticky Animated Chat Support Button */}
+      <WhatsAppFloat onOpenChatbot={() => setIsChatbotOpen(true)} />
 
       {/* 15. Mobile Sticky Bottom Navigation */}
       <MobileBottomNav
@@ -447,6 +449,14 @@ export default function App() {
         currentUser={currentUser}
         onLoginSuccess={(userObj) => setCurrentUser(userObj)}
         onLogout={() => setCurrentUser(null)}
+      />
+
+      <ChatbotModal
+        isOpen={isChatbotOpen}
+        onClose={() => setIsChatbotOpen(false)}
+        selectedCity={selectedCity}
+        onOpenCityModal={() => setIsCityModalOpen(true)}
+        onOpenLoginModal={() => setIsLoginModalOpen(true)}
       />
     </div>
   );
