@@ -290,7 +290,7 @@ export const productsData = [
     "name": "PlayStation Portal Remote Player",
     "image": "https://images.sharepal.in/categories/gaming-consoles/ps5/ps-portal-remote-player/ps-portal-on-rent-1.webp",
     "rating": 0,
-    "booked_count": 10000,
+    "booked_count": 18,
     "tag": "Vote to Launch",
     "per_day_rent": 158.25,
     "out_of_stock": false,

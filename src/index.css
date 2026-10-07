@@ -1647,6 +1647,63 @@ body.header-hidden .sp-category-nav-bar {
   to { opacity: 1; transform: scale(1); }
 }
 
+/* Bottom Sheet / Profile Drawer (Exact match to SharePal photo) */
+.sp-bottom-sheet-overlay {
+  align-items: flex-end !important;
+  padding: 0 !important;
+  background: rgba(15, 23, 42, 0.6) !important;
+}
+
+.sp-profile-bottom-sheet {
+  background: #FFFFFF !important;
+  border-radius: 24px 24px 0 0 !important;
+  max-width: 480px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 12px 18px 24px 18px !important;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25) !important;
+  animation: slideUpSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+}
+
+@keyframes slideUpSheet {
+  from {
+    transform: translateY(100%);
+    opacity: 0.5;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.sp-sheet-drag-handle {
+  width: 44px;
+  height: 4px;
+  background: #CBD5E1;
+  border-radius: 999px;
+  margin: 4px auto 16px auto;
+}
+
+.sp-profile-menu-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 4px;
+  border-bottom: 1px solid #F1F5F9;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.sp-profile-menu-row:hover {
+  background-color: #F8FAFC;
+}
+
+.sp-profile-menu-row:last-child {
+  border-bottom: none;
+}
+
 .sp-modal-header {
   padding: 1.25rem 1.5rem;
   border-bottom: 1px solid #E2E8F0;
@@ -2642,6 +2699,16 @@ body.header-hidden .sp-category-nav-bar {
    STICKY SUBCATEGORY SIDEBAR & TWO-COLUMN CATALOG LAYOUT
    (Matching SharePal.in exact left sidebar design)
    ========================================================================== */
+#sp-catalog-section {
+  padding-top: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  #sp-catalog-section {
+    padding-top: 1rem;
+  }
+}
+
 .sp-catalog-layout {
   display: flex;
   flex-direction: row;
@@ -3553,13 +3620,14 @@ body.header-hidden .sp-sticky-sidebar-col {
 
 .sp-vote-progress-track {
   position: relative;
-  height: 20px;
+  height: 18px;
   background: #E2E8F0;
   border-radius: 999px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 6px;
 }
 
 .sp-vote-progress-fill {
@@ -3575,9 +3643,11 @@ body.header-hidden .sp-sticky-sidebar-col {
 .sp-vote-progress-text {
   position: relative;
   z-index: 2;
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #334155;
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .sp-vote-join-btn {

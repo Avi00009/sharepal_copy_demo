@@ -176,7 +176,7 @@ export default function Navbar({
             >
               <div className="sp-user-avatar" style={{ fontWeight: 700, fontSize: '0.8rem' }}>
                 {currentUser ? (
-                  currentUser.name.charAt(0).toUpperCase()
+                  isNaN(currentUser.name) ? currentUser.name.charAt(0).toUpperCase() : 'A'
                 ) : (
                   <User size={18} />
                 )}
@@ -252,7 +252,7 @@ export default function Navbar({
               >
                 {currentUser ? (
                   <span style={{ fontWeight: 700, fontSize: '0.8rem' }}>
-                    {currentUser.name.charAt(0).toUpperCase()}
+                    {isNaN(currentUser.name) ? currentUser.name.charAt(0).toUpperCase() : 'A'}
                   </span>
                 ) : (
                   <User size={18} color="#FFFFFF" strokeWidth={2.2} />

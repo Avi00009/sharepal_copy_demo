@@ -59,9 +59,9 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState(() => {
     try {
       const saved = localStorage.getItem('sp_user');
-      return saved ? JSON.parse(saved) : null;
+      return saved ? JSON.parse(saved) : { name: 'Avigyan', phone: '9876543210' };
     } catch {
-      return null;
+      return { name: 'Avigyan', phone: '9876543210' };
     }
   });
 

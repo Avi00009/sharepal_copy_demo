@@ -113,9 +113,9 @@ export default function ProductCard({
           <div className="sp-vote-progress-track">
             <div
               className="sp-vote-progress-fill"
-              style={{ width: `${Math.min(100, Math.max(12, (product.booked_count || 16) / 10))}%` }}
+              style={{ width: `${Math.min(100, Math.max(2, ((product.booked_count || 18) / 1000) * 100))}%` }}
             />
-            <span className="sp-vote-progress-text">{product.booked_count || 16}/1000 Joined</span>
+            <span className="sp-vote-progress-text">{product.booked_count || 18}/1000 Joined</span>
           </div>
         </div>
       )}

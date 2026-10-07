@@ -1,5 +1,22 @@
 import React, { useState } from 'react';
-import { X, Smartphone, ShieldCheck, CheckCircle2, ArrowRight, RefreshCw, User, LogOut, AlertCircle, Check } from 'lucide-react';
+import {
+  X,
+  Smartphone,
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight,
+  RefreshCw,
+  User,
+  LogOut,
+  AlertCircle,
+  Check,
+  ChevronRight,
+  ArrowUpRight,
+  Package,
+  Heart,
+  Wallet,
+  HelpCircle
+} from 'lucide-react';
 import SharePalLogo from './SharePalLogo';
 
 export default function LoginModal({
@@ -14,6 +31,7 @@ export default function LoginModal({
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState(['', '', '', '']);
   const [isLoading, setIsLoading] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(false);
 
   // Validation States
   const [phoneError, setPhoneError] = useState('');
@@ -64,88 +82,245 @@ export default function LoginModal({
     setNameError('');
   };
 
-  // If already logged in, show user profile view
-  if (currentUser) {
+  // Profile Drawer View (Matches Photo 3 exact SharePal design)
+  if (!showLoginForm) {
+    const menuItems = [
+      {
+        icon: <User size={19} color="#475569" strokeWidth={2} />,
+        label: 'My Account',
+        onClick: () => alert('My Account: Profile & personal details.')
+      },
+      {
+        icon: <Package size={19} color="#475569" strokeWidth={2} />,
+        label: 'My Orders',
+        onClick: () => alert('My Orders: You currently have 0 active rentals.')
+      },
+      {
+        icon: <Heart size={19} color="#475569" strokeWidth={2} />,
+        label: 'My Wishlist',
+        onClick: () => alert('My Wishlist: PlayStation 5, Xbox Series X.')
+      },
+      {
+        icon: <Wallet size={19} color="#475569" strokeWidth={2} />,
+        label: 'Pal Wallet',
+        badge: (
+          <span
+            style={{
+              background: '#F1F5F9',
+              color: '#1E293B',
+              padding: '2px 8px',
+              borderRadius: '999px',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              marginLeft: '4px'
+            }}
+          >
+            ₹0
+          </span>
+        ),
+        onClick: () => alert('Pal Wallet balance: ₹0. Earn credits with every rental!')
+      },
+      {
+        icon: <ShieldCheck size={19} color="#475569" strokeWidth={2} />,
+        label: 'Verification',
+        onClick: () => alert('Verification: Zero Deposit KYC Verified.')
+      },
+      {
+        icon: <HelpCircle size={19} color="#475569" strokeWidth={2} />,
+        label: 'Help & Support',
+        onClick: () => {
+          window.open('https://wa.me/918047188880?text=Hi%20SharePal%2C%20I%20need%20assistance', '_blank');
+        }
+      }
+    ];
+
     return (
-      <div className="sp-modal-overlay" onClick={onClose} role="dialog" aria-modal="true">
-        <div className="sp-modal-content" style={{ maxWidth: '420px' }} onClick={(e) => e.stopPropagation()}>
-          <div className="sp-modal-header" style={{ borderBottom: 'none', paddingBottom: 0 }}>
-            <div />
-            <button className="sp-modal-close" onClick={onClose} aria-label="Close modal">
-              <X size={20} />
-            </button>
+      <div className="sp-modal-overlay sp-bottom-sheet-overlay" onClick={onClose} role="dialog" aria-modal="true">
+        <div className="sp-modal-content sp-profile-bottom-sheet" onClick={(e) => e.stopPropagation()}>
+          {/* Top Drag Indicator */}
+          <div className="sp-sheet-drag-handle" />
+
+          {/* Header Row: Hi, Avigyan! & Log out > */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+            <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#111827', margin: 0, letterSpacing: '-0.02em' }}>
+              Hi, {currentUser && isNaN(currentUser.name) ? currentUser.name : 'Avigyan'}!
+            </h2>
+
+            {currentUser ? (
+              <button
+                type="button"
+                onClick={() => {
+                  onLogout();
+                }}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  border: '1.5px solid #111827',
+                  borderRadius: '999px',
+                  padding: '5px 14px',
+                  fontSize: '0.825rem',
+                  fontWeight: 600,
+                  color: '#111827',
+                  background: '#FFFFFF',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <span>Log out</span>
+                <ChevronRight size={14} strokeWidth={2.5} />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setShowLoginForm(true)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  border: '1.5px solid #111827',
+                  borderRadius: '999px',
+                  padding: '5px 14px',
+                  fontSize: '0.825rem',
+                  fontWeight: 600,
+                  color: '#111827',
+                  background: '#FFFFFF',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <span>Log in</span>
+                <ChevronRight size={14} strokeWidth={2.5} />
+              </button>
+            )}
           </div>
 
-          <div style={{ textAlign: 'center', padding: '1rem 1.5rem 2rem 1.5rem' }}>
+          {/* Promo Offer Banner Card */}
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #F0FDF4 0%, #FAF5FF 60%, #F0FDF4 100%)',
+              border: '1px solid #DCFCE7',
+              borderRadius: '16px',
+              padding: '14px 16px',
+              marginBottom: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px'
+            }}
+          >
+            {/* Celebration Icon */}
             <div
               style={{
-                width: '72px',
-                height: '72px',
-                borderRadius: '50%',
-                background: '#F3E8FF',
-                color: '#4C187C',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 1.25rem auto'
-              }}
-            >
-              <User size={36} />
-            </div>
-
-            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#1E293B', marginBottom: '0.25rem' }}>
-              {currentUser.name || 'Gamer Pal'}
-            </h3>
-            <p style={{ fontSize: '0.875rem', color: '#64748B', marginBottom: '1.5rem' }}>
-              +91 {currentUser.phone}
-            </p>
-
-            <div
-              style={{
-                background: '#ECFDF5',
-                border: '1px solid #A7F3D0',
+                width: '42px',
+                height: '42px',
                 borderRadius: '12px',
-                padding: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                color: '#065F46',
-                fontSize: '0.825rem',
-                fontWeight: 600,
-                marginBottom: '1.75rem'
-              }}
-            >
-              <CheckCircle2 size={18} color="#059669" />
-              <span>SharePal Verified Renter &bull; Zero Deposit Active</span>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                onLogout();
-                onClose();
-              }}
-              style={{
-                width: '100%',
-                padding: '12px',
-                borderRadius: '999px',
-                background: '#FEE2E2',
-                color: '#DC2626',
-                fontWeight: 700,
-                fontSize: '0.9rem',
+                background: 'rgba(59, 130, 246, 0.08)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '8px',
-                cursor: 'pointer',
-                border: 'none',
-                transition: 'background 0.15s ease'
+                flexShrink: 0,
+                fontSize: '24px'
               }}
             >
-              <LogOut size={16} />
-              <span>Log Out</span>
-            </button>
+              🎉
+            </div>
+
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '0.82rem', lineHeight: '1.35' }}>
+                <span style={{ color: '#E11D48', fontWeight: 700 }}>Use code SHAREPAL &amp; get 10% </span>
+                <span style={{ color: '#1F2937', fontWeight: 500 }}>on orders above ₹1500. Maximum discount: ₹300</span>
+              </div>
+              <div style={{ fontSize: '0.74rem', fontWeight: 600, color: '#4B5563', marginTop: '4px' }}>
+                Use Coupon - SHAREPAL
+              </div>
+            </div>
           </div>
+
+          {/* Menu Items List */}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {menuItems.map((item) => (
+              <div
+                key={item.label}
+                className="sp-profile-menu-row"
+                onClick={item.onClick}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                  {item.icon}
+                  <span style={{ fontSize: '0.925rem', fontWeight: 600, color: '#111827' }}>
+                    {item.label}
+                  </span>
+                  {item.badge}
+                </div>
+                <ChevronRight size={16} color="#64748B" strokeWidth={2} />
+              </div>
+            ))}
+          </div>
+
+          {/* Asset Partner Program Banner Card */}
+          <a
+            href="https://sharepal.in/lend"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              background: 'linear-gradient(135deg, #07152E 0%, #173878 50%, #1D4ED8 100%)',
+              borderRadius: '16px',
+              padding: '16px 18px',
+              marginTop: '16px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              textDecoration: 'none',
+              color: '#FFFFFF',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+          >
+            {/* Camera / Asset Illustration */}
+            <div
+              style={{
+                width: '46px',
+                height: '46px',
+                borderRadius: '12px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                fontSize: '24px'
+              }}
+            >
+              📷
+            </div>
+
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ color: '#A3E635', fontSize: '0.68rem', fontWeight: 800, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                ASSET PARTNER PROGRAM
+              </div>
+              <h4 style={{ color: '#FFFFFF', fontSize: '0.92rem', fontWeight: 700, margin: '2px 0 3px 0', lineHeight: 1.25 }}>
+                Sponsor an asset. Earn every month.
+              </h4>
+              <p style={{ color: '#94A3B8', fontSize: '0.72rem', margin: 0, lineHeight: 1.3 }}>
+                Monthly payouts to your bank — plus discounts on every rental.
+              </p>
+            </div>
+
+            {/* Lime Arrow Button */}
+            <div
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                background: '#A3E635',
+                color: '#0F172A',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}
+            >
+              <ArrowUpRight size={18} strokeWidth={2.5} />
+            </div>
+          </a>
         </div>
       </div>
     );
