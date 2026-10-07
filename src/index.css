@@ -2369,18 +2369,19 @@ img {
 
 @media (min-width: 1024px) {
   .sp-sticky-sidebar-col {
-    width: 96px;
+    width: 90px;
     position: sticky;
-    top: 125px;
+    top: 135px;
+    align-self: flex-start;
   }
 }
 
 .sp-sticky-sidebar-card {
   background: #FFFFFF;
   border-radius: 20px;
-  border: 1.5px solid #F1F5F9;
+  border: 1px solid #E2E8F0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  padding: 10px 6px;
+  padding: 12px 6px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -2396,11 +2397,9 @@ img {
 @media (min-width: 1024px) {
   .sp-sticky-sidebar-card {
     flex-direction: column;
-    padding: 16px 6px;
-    gap: 16px;
-    max-height: calc(100vh - 145px);
-    overflow-y: auto;
-    overflow-x: hidden;
+    padding: 14px 6px;
+    gap: 12px;
+    overflow: visible;
   }
 }
 
@@ -2425,28 +2424,28 @@ img {
 }
 
 .sp-sidebar-icon-box {
-  width: 58px;
-  height: 58px;
-  border-radius: 16px;
-  background: #F8FAFC;
-  border: 1.5px solid #E2E8F0;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 6px;
   overflow: hidden;
-  transition: all 200ms ease;
+  transition: all 180ms ease;
 }
 
 .sp-sidebar-nav-item:hover .sp-sidebar-icon-box {
   border-color: #93C5FD;
-  background: #F1F5F9;
+  background: #F8FAFC;
 }
 
 .sp-sidebar-icon-box.active {
   border: 2px solid #2563EB;
   background: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.22);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.18);
 }
 
 .sp-sidebar-item-img {
