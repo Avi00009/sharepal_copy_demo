@@ -2492,5 +2492,487 @@ img {
   width: 100%;
 }
 
+/* ==========================================================================
+   OFFICIAL SHAREPAL DUAL-MONTH RENTAL DATE PICKER MODAL
+   ========================================================================== */
+.sp-cal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.68);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+  overflow-y: auto;
+  animation: spFadeIn 0.2s ease-out;
+}
+
+.sp-cal-modal-container {
+  background: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.22);
+  width: 100%;
+  max-width: 950px;
+  padding: 24px 28px;
+  position: relative;
+  animation: spModalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sp-cal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sp-cal-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.sp-cal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+}
+
+.sp-cal-close-btn:hover {
+  background: #F1F5F9;
+  color: #0F172A;
+}
+
+.sp-cal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (min-width: 860px) {
+  .sp-cal-body {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+}
+
+/* Left Column */
+.sp-cal-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sp-cal-inputs-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sp-cal-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sp-cal-input-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #1E293B;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.sp-cal-required {
+  color: #EF4444;
+}
+
+.sp-cal-input-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 9px 12px;
+  background: #FFFFFF;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #0F172A;
+  min-height: 42px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.sp-cal-input-icon {
+  color: #64748B;
+  flex-shrink: 0;
+}
+
+.sp-cal-input-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Info Box */
+.sp-cal-info-card {
+  background: #EFF6FF;
+  border: 1px solid #DBEAFE;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.sp-cal-info-icon-wrapper {
+  color: #2563EB;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.sp-cal-info-text {
+  font-size: 0.72rem;
+  color: #1E40AF;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Rental Period Card */
+.sp-cal-period-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sp-cal-period-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.sp-cal-period-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.sp-cal-days-counter {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.sp-cal-days-num {
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #0F172A;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.sp-cal-days-unit {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #64748B;
+}
+
+.sp-cal-chargeable-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-left: 1px solid #E2E8F0;
+  padding-left: 18px;
+}
+
+.sp-cal-chargeable-label {
+  font-size: 0.72rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.sp-cal-chargeable-val {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.sp-cal-charge-icon {
+  color: #1E293B;
+  flex-shrink: 0;
+}
+
+/* Dark Savings Banner */
+.sp-cal-savings-card {
+  background: #0B132B;
+  border-radius: 14px;
+  padding: 14px 16px;
+  color: #FFFFFF;
+}
+
+.sp-cal-savings-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.sp-cal-savings-badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: #9EFF00;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+}
+
+.sp-cal-savings-heading {
+  font-size: 1.05rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #9EFF00;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.sp-cal-savings-desc {
+  font-size: 0.73rem;
+  color: #CBD5E1;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Action Button */
+.sp-cal-continue-btn {
+  width: 100%;
+  border-radius: 9999px;
+  background: #2563EB;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 13px 20px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+  margin-top: 4px;
+}
+
+.sp-cal-continue-btn:hover:not(:disabled) {
+  background: #1D4ED8;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
+}
+
+.sp-cal-continue-btn:disabled {
+  background: #94A3B8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Right Column (Dual-Month Calendar) */
+.sp-cal-right-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.sp-cal-dual-wrapper {
+  background: #FFFFFF;
+  border: 1.5px solid #F1F5F9;
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.sp-cal-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.sp-cal-nav-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #334155;
+  transition: all 0.15s ease;
+}
+
+.sp-cal-nav-btn:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  color: #0F172A;
+}
+
+.sp-cal-month-titles {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .sp-cal-month-titles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: calc(100% - 80px);
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: #1E293B;
+  }
+}
+
+.sp-cal-m-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.sp-cal-months-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 640px) {
+  .sp-cal-months-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+.sp-cal-single-month {
+  display: flex;
+  flex-direction: column;
+}
+
+.sp-cal-mobile-m-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1E293B;
+  text-align: center;
+  margin-bottom: 8px;
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .sp-cal-mobile-m-title {
+    display: none;
+  }
+}
+
+.sp-cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.sp-cal-wd {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748B;
+  padding: 4px 0;
+}
+
+.sp-cal-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 3px;
+}
+
+.sp-cal-day-cell {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  user-select: none;
+}
+
+.sp-cal-day-cell.other-month {
+  color: #60A5FA;
+  cursor: default;
+  opacity: 0.85;
+}
+
+.sp-cal-day-cell.disabled {
+  color: #CBD5E1;
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.sp-cal-day-cell:not(.disabled):not(.other-month):hover {
+  background: #F1F5F9;
+  border-radius: 8px;
+}
+
+/* Range Highlighting (Matching SharePal lime green style) */
+.sp-cal-day-cell.range-start {
+  background: #9EFF00 !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.sp-cal-day-cell.range-end {
+  background: #9EFF00 !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.sp-cal-day-cell.range-start.range-end {
+  border-radius: 8px !important;
+}
+
+.sp-cal-day-cell.in-range {
+  background: #D9F99D !important;
+  color: #14532D !important;
+  font-weight: 700 !important;
+  border-radius: 0 !important;
+}
+
+
 
 

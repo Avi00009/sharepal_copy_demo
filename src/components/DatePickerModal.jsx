@@ -1,5 +1,33 @@
-import React, { useState } from 'react';
-import { Calendar, X, Clock, Info, Check, ShieldCheck } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Calendar, X, ChevronLeft, ChevronRight, Info, Percent } from 'lucide-react';
+
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+const SHORT_MONTH_NAMES = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+];
+
+const WEEK_DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+function getOrdinal(n) {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function formatDateDisplay(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  if (isNaN(d.getTime())) return '';
+  const month = SHORT_MONTH_NAMES[d.getMonth()];
+  const day = String(d.getDate()).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${month} ${day}, ${year}`;
+}
 
 export default function DatePickerModal({
   isOpen,
@@ -10,245 +38,426 @@ export default function DatePickerModal({
 }) {
   if (!isOpen) return null;
 
-  // Internal state before applying
-  const [tempDelivery, setTempDelivery] = useState(
-    deliveryDate || new Date(Date.now() + 86400000).toISOString().split('T')[0]
-  );
-  const [tempPickup, setTempPickup] = useState(
-    pickupDate || new Date(Date.now() + 86400000 * 4).toISOString().split('T')[0]
-  );
+  // Initialize dates
+  const today = useMemo(() => {
+    const t = new Date();
+    t.setHours(0, 0, 0, 0);
+    return t;
+  }, []);
 
-  // Compute billable days:
-  // SharePal policy: rental starts following day of delivery and ends day prior to pickup
-  // So if Delivery = Day 1, Pickup = Day 4 => Billable Days = (4 - 1 - 1) = 2 days minimum.
-  const dStart = new Date(tempDelivery);
-  const dEnd = new Date(tempPickup);
-  const diffTime = dEnd - dStart;
-  const rawDays = Math.max(1, Math.round(diffTime / (1000 * 60 * 60 * 24)));
-  const billableDays = Math.max(2, rawDays - 1); // standard minimum 2 days
+  // Today string YYYY-MM-DD
+  const todayStr = useMemo(() => {
+    return today.toISOString().split('T')[0];
+  }, [today]);
 
-  const setPreset = (daysCount) => {
-    const today = new Date();
-    const dDeliv = new Date(today.getTime() + 86400000); // tomorrow
-    const dPick = new Date(dDeliv.getTime() + (daysCount + 1) * 86400000);
-    setTempDelivery(dDeliv.toISOString().split('T')[0]);
-    setTempPickup(dPick.toISOString().split('T')[0]);
+  // Selected delivery & pickup
+  const [selectedDelivery, setSelectedDelivery] = useState(() => {
+    if (deliveryDate) return deliveryDate;
+    const d = new Date(today.getTime() + 86400000 * 2); // default 2 days out
+    return d.toISOString().split('T')[0];
+  });
+
+  const [selectedPickup, setSelectedPickup] = useState(() => {
+    if (pickupDate) return pickupDate;
+    const d = new Date(today.getTime() + 86400000 * 9); // default 9 days out (7 days gap)
+    return d.toISOString().split('T')[0];
+  });
+
+  // Calendar View month (starts at delivery date month)
+  const [viewYearMonth, setViewYearMonth] = useState(() => {
+    const initDate = selectedDelivery ? new Date(selectedDelivery + 'T00:00:00') : today;
+    return {
+      year: initDate.getFullYear(),
+      month: initDate.getMonth()
+    };
+  });
+
+  // Hover state for interactive selection preview
+  const [hoverDate, setHoverDate] = useState(null);
+
+  // Billable calculation
+  const rentalStats = useMemo(() => {
+    if (!selectedDelivery || !selectedPickup) {
+      return { days: 0, chargeableText: 'Select dates', valid: false };
+    }
+
+    const dDeliv = new Date(selectedDelivery + 'T00:00:00');
+    const dPick = new Date(selectedPickup + 'T00:00:00');
+
+    if (dPick <= dDeliv) {
+      return { days: 0, chargeableText: 'Invalid period', valid: false };
+    }
+
+    const diffMs = dPick.getTime() - dDeliv.getTime();
+    const rawDiffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+    // SharePal policy: rental starts day after delivery and ends day before pickup
+    // E.g. Nov 3 to Nov 10 => 7 raw days. Chargeable is Nov 4 to Nov 9 (6 days).
+    const billableDays = Math.max(1, rawDiffDays - 1);
+
+    const chargeStart = new Date(dDeliv.getTime() + 86400000);
+    const chargeEnd = new Date(dPick.getTime() - 86400000);
+
+    const startStr = `${getOrdinal(chargeStart.getDate())} ${SHORT_MONTH_NAMES[chargeStart.getMonth()]}`;
+    const endStr = `${getOrdinal(chargeEnd.getDate())} ${SHORT_MONTH_NAMES[chargeEnd.getMonth()]}`;
+
+    return {
+      days: billableDays,
+      chargeableText: `${startStr} - ${endStr}`,
+      valid: true
+    };
+  }, [selectedDelivery, selectedPickup]);
+
+  // Navigate calendar months
+  const handlePrevMonth = () => {
+    setViewYearMonth((prev) => {
+      let newMonth = prev.month - 1;
+      let newYear = prev.year;
+      if (newMonth < 0) {
+        newMonth = 11;
+        newYear -= 1;
+      }
+      return { year: newYear, month: newMonth };
+    });
   };
 
-  const handleSave = () => {
-    if (new Date(tempPickup) <= new Date(tempDelivery)) {
-      alert("Pickup date must be after delivery date (minimum 2 rental days).");
+  const handleNextMonth = () => {
+    setViewYearMonth((prev) => {
+      let newMonth = prev.month + 1;
+      let newYear = prev.year;
+      if (newMonth > 11) {
+        newMonth = 0;
+        newYear += 1;
+      }
+      return { year: newYear, month: newMonth };
+    });
+  };
+
+  // Date selection handling
+  const handleDateClick = (dateStr) => {
+    if (!selectedDelivery || (selectedDelivery && selectedPickup)) {
+      // First click: start new range
+      setSelectedDelivery(dateStr);
+      setSelectedPickup(null);
+    } else if (selectedDelivery && !selectedPickup) {
+      // Second click: finish range
+      if (dateStr < selectedDelivery) {
+        setSelectedDelivery(dateStr);
+        setSelectedPickup(null);
+      } else if (dateStr === selectedDelivery) {
+        // Same date: must be at least 2 days apart for SharePal rental
+        const nextDay = new Date(new Date(dateStr + 'T00:00:00').getTime() + 86400000 * 2);
+        setSelectedPickup(nextDay.toISOString().split('T')[0]);
+      } else {
+        setSelectedPickup(dateStr);
+      }
+    }
+  };
+
+  // Submit
+  const handleContinue = () => {
+    if (!rentalStats.valid || !selectedDelivery || !selectedPickup) {
+      alert('Please select both delivery and pickup dates.');
       return;
     }
-    onApplyDates(tempDelivery, tempPickup, billableDays);
+    onApplyDates(selectedDelivery, selectedPickup, rentalStats.days);
     onClose();
   };
 
+  // Generate month data helper
+  const getMonthDays = (year, month) => {
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startWeekday = firstDay.getDay(); // 0 is Sunday
+    const totalDays = lastDay.getDate();
+
+    // Days from previous month
+    const prevMonthLastDay = new Date(year, month, 0).getDate();
+    const prevDays = [];
+    for (let i = startWeekday - 1; i >= 0; i--) {
+      prevDays.push({
+        dayNum: prevMonthLastDay - i,
+        isOtherMonth: true,
+        dateStr: ''
+      });
+    }
+
+    // Days in current month
+    const currentDays = [];
+    for (let i = 1; i <= totalDays; i++) {
+      const monthPadded = String(month + 1).padStart(2, '0');
+      const dayPadded = String(i).padStart(2, '0');
+      const dateStr = `${year}-${monthPadded}-${dayPadded}`;
+      const isPast = dateStr < todayStr;
+      currentDays.push({
+        dayNum: i,
+        isOtherMonth: false,
+        dateStr,
+        isPast
+      });
+    }
+
+    // Days from next month to fill complete weeks
+    const remaining = (7 - ((prevDays.length + currentDays.length) % 7)) % 7;
+    const nextDays = [];
+    for (let i = 1; i <= remaining; i++) {
+      nextDays.push({
+        dayNum: i,
+        isOtherMonth: true,
+        dateStr: ''
+      });
+    }
+
+    return [...prevDays, ...currentDays, ...nextDays];
+  };
+
+  // Month 1 and Month 2 definitions
+  const month1 = viewYearMonth;
+  const month2 = useMemo(() => {
+    let m = viewYearMonth.month + 1;
+    let y = viewYearMonth.year;
+    if (m > 11) {
+      m = 0;
+      y += 1;
+    }
+    return { year: y, month: m };
+  }, [viewYearMonth]);
+
+  const month1Days = useMemo(() => getMonthDays(month1.year, month1.month), [month1]);
+  const month2Days = useMemo(() => getMonthDays(month2.year, month2.month), [month2]);
+
+  // Check date role helper
+  const getDateStatus = (dateStr) => {
+    if (!dateStr) return { isStart: false, isEnd: false, isInRange: false };
+
+    const isStart = dateStr === selectedDelivery;
+    const isEnd = dateStr === selectedPickup;
+
+    let isInRange = false;
+    if (selectedDelivery && selectedPickup) {
+      isInRange = dateStr > selectedDelivery && dateStr < selectedPickup;
+    } else if (selectedDelivery && hoverDate && hoverDate > selectedDelivery) {
+      isInRange = dateStr > selectedDelivery && dateStr < hoverDate;
+    }
+
+    return { isStart, isEnd, isInRange };
+  };
+
   return (
-    <div className="sp-modal-overlay" onClick={onClose}>
-      <div className="sp-modal-content" style={{ maxWidth: '580px' }} onClick={(e) => e.stopPropagation()}>
-        <div className="sp-modal-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Calendar size={22} color="#4C187C" />
-            <div>
-              <h3 className="sp-modal-title">Select Rental Dates</h3>
-              <p style={{ fontSize: '0.75rem', color: '#64748B' }}>
-                Delivery by 8 PM &middot; Pickup after 9 AM &middot; Free Doorstep Delivery
-              </p>
-            </div>
-          </div>
-          <button className="sp-modal-close" onClick={onClose} aria-label="Close modal">
+    <div className="sp-cal-overlay" onClick={onClose} role="dialog" aria-modal="true">
+      <div className="sp-cal-modal-container" onClick={(e) => e.stopPropagation()}>
+        {/* Header */}
+        <div className="sp-cal-header">
+          <h2 className="sp-cal-title">Select your Dates</h2>
+          <button
+            type="button"
+            className="sp-cal-close-btn"
+            onClick={onClose}
+            aria-label="Close date picker"
+          >
             <X size={20} />
           </button>
         </div>
 
-        <div className="sp-modal-body">
-          {/* Quick Presets */}
-          <div style={{ marginBottom: '1.25rem' }}>
-            <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>
-              Popular Rental Durations
-            </label>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              <button
-                type="button"
-                onClick={() => setPreset(2)}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '999px',
-                  fontSize: '0.8rem',
-                  fontWeight: 600,
-                  border: billableDays === 2 ? '1.5px solid #8A2BE2' : '1px solid #E2E8F0',
-                  background: billableDays === 2 ? '#F3E8FF' : '#F8FAFC',
-                  color: billableDays === 2 ? '#4C187C' : '#334155'
-                }}
-              >
-                Weekend (2 Days)
-              </button>
-              <button
-                type="button"
-                onClick={() => setPreset(4)}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '999px',
-                  fontSize: '0.8rem',
-                  fontWeight: 600,
-                  border: billableDays === 4 ? '1.5px solid #8A2BE2' : '1px solid #E2E8F0',
-                  background: billableDays === 4 ? '#F3E8FF' : '#F8FAFC',
-                  color: billableDays === 4 ? '#4C187C' : '#334155'
-                }}
-              >
-                4 Days (Save 15%)
-              </button>
-              <button
-                type="button"
-                onClick={() => setPreset(7)}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '999px',
-                  fontSize: '0.8rem',
-                  fontWeight: 600,
-                  border: billableDays === 7 ? '1.5px solid #8A2BE2' : '1px solid #E2E8F0',
-                  background: billableDays === 7 ? '#F3E8FF' : '#F8FAFC',
-                  color: billableDays === 7 ? '#4C187C' : '#334155'
-                }}
-              >
-                1 Week (Save 35%)
-              </button>
-              <button
-                type="button"
-                onClick={() => setPreset(14)}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '999px',
-                  fontSize: '0.8rem',
-                  fontWeight: 600,
-                  border: billableDays === 14 ? '1.5px solid #8A2BE2' : '1px solid #E2E8F0',
-                  background: billableDays === 14 ? '#F3E8FF' : '#F8FAFC',
-                  color: billableDays === 14 ? '#4C187C' : '#334155'
-                }}
-              >
-                14 Days (Save 50%)
-              </button>
-            </div>
-          </div>
+        {/* Main Content: 2-Column Split */}
+        <div className="sp-cal-body">
+          {/* Left Column: Inputs & Duration & Savings & Action */}
+          <div className="sp-cal-left-col">
+            {/* Delivery & Pickup Inputs */}
+            <div className="sp-cal-inputs-row">
+              <div className="sp-cal-input-group">
+                <label className="sp-cal-input-label">
+                  Delivery Date <span className="sp-cal-required">*</span>
+                </label>
+                <div className="sp-cal-input-box">
+                  <Calendar size={17} className="sp-cal-input-icon" />
+                  <span className="sp-cal-input-text">
+                    {formatDateDisplay(selectedDelivery) || 'Select date'}
+                  </span>
+                </div>
+              </div>
 
-          {/* Date Inputs */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '1.25rem' }}>
-            <div style={{ background: '#F8FAFC', padding: '12px', borderRadius: '12px', border: '1px solid #E2E8F0' }}>
-              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '6px' }}>
-                DELIVERY DATE
-              </label>
-              <input
-                type="date"
-                value={tempDelivery}
-                min={new Date().toISOString().split('T')[0]}
-                onChange={(e) => setTempDelivery(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '8px 10px',
-                  borderRadius: '8px',
-                  border: '1px solid #CBD5E1',
-                  background: '#FFFFFF',
-                  fontWeight: 600,
-                  fontSize: '0.9rem',
-                  color: '#1E293B',
-                  outline: 'none'
-                }}
-              />
-              <span style={{ fontSize: '0.7rem', color: '#64748B', marginTop: '4px', display: 'block' }}>
-                Delivered between 4 PM - 8 PM
-              </span>
-            </div>
-
-            <div style={{ background: '#F8FAFC', padding: '12px', borderRadius: '12px', border: '1px solid #E2E8F0' }}>
-              <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#475569', marginBottom: '6px' }}>
-                PICKUP DATE
-              </label>
-              <input
-                type="date"
-                value={tempPickup}
-                min={tempDelivery}
-                onChange={(e) => setTempPickup(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '8px 10px',
-                  borderRadius: '8px',
-                  border: '1px solid #CBD5E1',
-                  background: '#FFFFFF',
-                  fontWeight: 600,
-                  fontSize: '0.9rem',
-                  color: '#1E293B',
-                  outline: 'none'
-                }}
-              />
-              <span style={{ fontSize: '0.7rem', color: '#64748B', marginTop: '4px', display: 'block' }}>
-                Picked up between 9 AM - 12 PM
-              </span>
-            </div>
-          </div>
-
-          {/* SharePal Rental Formula Notice */}
-          <div
-            style={{
-              background: '#EFF6FF',
-              border: '1px solid #BFDBFE',
-              borderRadius: '12px',
-              padding: '12px',
-              marginBottom: '1.5rem',
-              display: 'flex',
-              gap: '10px'
-            }}
-          >
-            <Info size={20} color="#1D4ED8" style={{ flexShrink: 0, marginTop: '2px' }} />
-            <div style={{ fontSize: '0.8rem', color: '#1E40AF', lineHeight: '1.45' }}>
-              <strong>SharePal Transparent Billing:</strong> The rental starts the day after delivery and ends the day prior to pickup.
-              <div style={{ marginTop: '4px', fontWeight: 600 }}>
-                You are charged for: <span style={{ color: '#4C187C', fontSize: '0.95rem' }}>{billableDays} billable days</span>.
+              <div className="sp-cal-input-group">
+                <label className="sp-cal-input-label">
+                  Pickup Date <span className="sp-cal-required">*</span>
+                </label>
+                <div className="sp-cal-input-box">
+                  <Calendar size={17} className="sp-cal-input-icon" />
+                  <span className="sp-cal-input-text">
+                    {formatDateDisplay(selectedPickup) || 'Select date'}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Zero Deposit Assurance */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1.25rem', color: '#059669', fontSize: '0.825rem', fontWeight: 600 }}>
-            <ShieldCheck size={18} />
-            <span>₹0 Security Deposit &middot; Free Doorstep Delivery &middot; Cancel Anytime</span>
-          </div>
+            {/* Same-Day & Slot Info Banner */}
+            <div className="sp-cal-info-card">
+              <div className="sp-cal-info-icon-wrapper">
+                <Info size={16} />
+              </div>
+              <p className="sp-cal-info-text">
+                <strong>Same-day delivery</strong> between <strong>5PM and 11PM</strong> For future dates, you can select a specific time slot available at checkout. We pickup between <strong>9AM to 1PM</strong>.
+              </p>
+            </div>
 
-          {/* Action Buttons */}
-          <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+            {/* Rental Period Card */}
+            <div className="sp-cal-period-section">
+              <span className="sp-cal-period-title">Your Rental Period:</span>
+              <div className="sp-cal-period-card">
+                <div className="sp-cal-days-counter">
+                  <span className="sp-cal-days-num">
+                    {String(rentalStats.days).padStart(2, '0')}
+                  </span>
+                  <span className="sp-cal-days-unit">Days</span>
+                </div>
+                <div className="sp-cal-chargeable-wrap">
+                  <span className="sp-cal-chargeable-label">Chargeable Period:</span>
+                  <div className="sp-cal-chargeable-val">
+                    <Calendar size={15} className="sp-cal-charge-icon" />
+                    <span>{rentalStats.chargeableText}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Dark "Save more with us!" Banner */}
+            <div className="sp-cal-savings-card">
+              <div className="sp-cal-savings-header">
+                <div className="sp-cal-savings-badge">
+                  <Percent size={14} strokeWidth={3} />
+                </div>
+                <h4 className="sp-cal-savings-heading">Save more with us!</h4>
+              </div>
+              <p className="sp-cal-savings-desc">
+                Longer rental periods mean bigger savings—enjoy discounts of up to 12%. We don't charge you for deliver and pickup days!
+              </p>
+            </div>
+
+            {/* Continue Button */}
             <button
               type="button"
-              onClick={onClose}
-              style={{
-                padding: '10px 18px',
-                borderRadius: '999px',
-                fontWeight: 600,
-                fontSize: '0.875rem',
-                color: '#64748B',
-                background: '#F1F5F9'
-              }}
+              className="sp-cal-continue-btn"
+              onClick={handleContinue}
+              disabled={!rentalStats.valid}
             >
-              Cancel
+              Continue
             </button>
-            <button
-              type="button"
-              onClick={handleSave}
-              style={{
-                padding: '10px 24px',
-                borderRadius: '999px',
-                fontWeight: 700,
-                fontSize: '0.875rem',
-                color: '#FFFFFF',
-                background: '#4C187C',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                boxShadow: '0 4px 12px rgba(76, 24, 124, 0.3)'
-              }}
-            >
-              <Check size={18} />
-              Confirm Rental Dates
-            </button>
+          </div>
+
+          {/* Right Column: 2-Month Dual Calendar */}
+          <div className="sp-cal-right-col">
+            <div className="sp-cal-dual-wrapper">
+              {/* Header Navigation */}
+              <div className="sp-cal-nav-bar">
+                <button
+                  type="button"
+                  className="sp-cal-nav-btn"
+                  onClick={handlePrevMonth}
+                  aria-label="Previous month"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+
+                <div className="sp-cal-month-titles">
+                  <div className="sp-cal-m-title">
+                    {MONTH_NAMES[month1.month]} {month1.year}
+                  </div>
+                  <div className="sp-cal-m-title">
+                    {MONTH_NAMES[month2.month]} {month2.year}
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  className="sp-cal-nav-btn"
+                  onClick={handleNextMonth}
+                  aria-label="Next month"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+
+              {/* Dual Month Grids */}
+              <div className="sp-cal-months-grid">
+                {/* Month 1 */}
+                <div className="sp-cal-single-month">
+                  <div className="sp-cal-mobile-m-title">
+                    {MONTH_NAMES[month1.month]} {month1.year}
+                  </div>
+                  <div className="sp-cal-weekdays">
+                    {WEEK_DAYS.map((wd) => (
+                      <span key={wd} className="sp-cal-wd">
+                        {wd}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="sp-cal-days-grid">
+                    {month1Days.map((d, idx) => {
+                      if (d.isOtherMonth) {
+                        return (
+                          <div key={idx} className="sp-cal-day-cell other-month">
+                            <span>{d.dayNum}</span>
+                          </div>
+                        );
+                      }
+                      const { isStart, isEnd, isInRange } = getDateStatus(d.dateStr);
+                      return (
+                        <div
+                          key={d.dateStr}
+                          className={`sp-cal-day-cell ${d.isPast ? 'disabled' : ''} ${
+                            isStart ? 'range-start' : ''
+                          } ${isEnd ? 'range-end' : ''} ${isInRange ? 'in-range' : ''}`}
+                          onClick={() => !d.isPast && handleDateClick(d.dateStr)}
+                          onMouseEnter={() => !d.isPast && setHoverDate(d.dateStr)}
+                          onMouseLeave={() => setHoverDate(null)}
+                        >
+                          <span className="sp-cal-day-number">{d.dayNum}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Month 2 */}
+                <div className="sp-cal-single-month">
+                  <div className="sp-cal-mobile-m-title">
+                    {MONTH_NAMES[month2.month]} {month2.year}
+                  </div>
+                  <div className="sp-cal-weekdays">
+                    {WEEK_DAYS.map((wd) => (
+                      <span key={wd} className="sp-cal-wd">
+                        {wd}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="sp-cal-days-grid">
+                    {month2Days.map((d, idx) => {
+                      if (d.isOtherMonth) {
+                        return (
+                          <div key={idx} className="sp-cal-day-cell other-month">
+                            <span>{d.dayNum}</span>
+                          </div>
+                        );
+                      }
+                      const { isStart, isEnd, isInRange } = getDateStatus(d.dateStr);
+                      return (
+                        <div
+                          key={d.dateStr}
+                          className={`sp-cal-day-cell ${d.isPast ? 'disabled' : ''} ${
+                            isStart ? 'range-start' : ''
+                          } ${isEnd ? 'range-end' : ''} ${isInRange ? 'in-range' : ''}`}
+                          onClick={() => !d.isPast && handleDateClick(d.dateStr)}
+                          onMouseEnter={() => !d.isPast && setHoverDate(d.dateStr)}
+                          onMouseLeave={() => setHoverDate(null)}
+                        >
+                          <span className="sp-cal-day-number">{d.dayNum}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
