@@ -1654,17 +1654,24 @@ body.header-hidden .sp-category-nav-bar {
   background: rgba(15, 23, 42, 0.6) !important;
 }
 
-.sp-profile-bottom-sheet {
+.sp-profile-bottom-sheet,
+.sp-search-bottom-sheet {
   background: #FFFFFF !important;
-  border-radius: 24px 24px 0 0 !important;
+  border-radius: 20px 20px 0 0 !important;
   max-width: 480px !important;
   width: 100% !important;
   margin: 0 auto !important;
-  padding: 12px 18px 24px 18px !important;
+  padding: 0 !important;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25) !important;
   animation: slideUpSheet 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  max-height: 90vh !important;
+  max-height: 88vh !important;
   overflow-y: auto !important;
+}
+
+.sp-profile-bottom-sheet {
+  padding: 12px 18px 24px 18px !important;
+  border-radius: 24px 24px 0 0 !important;
+  max-height: 90vh !important;
 }
 
 @keyframes slideUpSheet {

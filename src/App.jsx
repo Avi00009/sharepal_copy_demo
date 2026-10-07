@@ -19,6 +19,7 @@ import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import MobileBottomNav from './components/MobileBottomNav';
 import LoginModal from './components/LoginModal';
+import SearchModal from './components/SearchModal';
 import OfferBannerCarousel from './components/OfferBannerCarousel';
 import ChatbotModal from './components/ChatbotModal';
 import StickySubcategorySidebar from './components/StickySubcategorySidebar';
@@ -52,6 +53,7 @@ export default function App() {
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [detailProduct, setDetailProduct] = useState(null);
 
@@ -228,10 +230,7 @@ export default function App() {
         onOpenDateModal={() => setIsDateModalOpen(true)}
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
-        onOpenSearch={() => {
-          window.scrollTo({ top: 380, behavior: 'smooth' });
-          document.querySelector('.sp-search-input')?.focus();
-        }}
+        onOpenSearch={() => setIsSearchModalOpen(true)}
         currentUser={currentUser}
         onOpenLoginModal={() => setIsLoginModalOpen(true)}
       />
@@ -393,10 +392,7 @@ export default function App() {
       <MobileBottomNav
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
-        onOpenSearch={() => {
-          window.scrollTo({ top: 380, behavior: 'smooth' });
-          document.querySelector('.sp-search-input')?.focus();
-        }}
+        onOpenSearch={() => setIsSearchModalOpen(true)}
         onOpenCategories={() => {
           window.scrollTo({ top: 220, behavior: 'smooth' });
         }}
@@ -445,6 +441,16 @@ export default function App() {
         currentUser={currentUser}
         onLoginSuccess={(userObj) => setCurrentUser(userObj)}
         onLogout={() => setCurrentUser(null)}
+      />
+
+      <SearchModal
+        isOpen={isSearchModalOpen}
+        onClose={() => setIsSearchModalOpen(false)}
+        products={products}
+        onSelectProduct={(p) => {
+          setDetailProduct(p);
+          setIsSearchModalOpen(false);
+        }}
       />
 
       <ChatbotModal
