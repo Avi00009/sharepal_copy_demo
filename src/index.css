@@ -1594,3 +1594,223 @@ img {
 .sp-mobile-nav-item.active {
   color: var(--color-primary-purple);
 }
+
+/* ==========================================================================
+   MOVING OFFER BANNER CAROUSEL
+   ========================================================================== */
+.sp-offer-carousel-wrap {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(76, 24, 124, 0.22);
+}
+
+.sp-offer-slide {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.25rem 2.25rem 1.25rem;
+  color: #FFFFFF;
+  min-height: 220px;
+  transition: all 400ms ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .sp-offer-slide {
+    flex-direction: row;
+    padding: 1.75rem 3.5rem;
+    min-height: 200px;
+  }
+}
+
+.sp-offer-info {
+  flex: 1;
+  max-width: 600px;
+  z-index: 5;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .sp-offer-info {
+    text-align: left;
+  }
+}
+
+.sp-offer-title {
+  font-family: var(--font-family-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #FFFFFF;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .sp-offer-title {
+    font-size: 1.75rem;
+  }
+}
+
+.sp-offer-subtitle {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .sp-offer-subtitle {
+    font-size: 0.95rem;
+  }
+}
+
+.sp-offer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .sp-offer-actions {
+    justify-content: flex-start;
+  }
+}
+
+.sp-offer-coupon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1.5px dashed rgba(255, 255, 255, 0.5);
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  color: #FFFFFF;
+  font-family: monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sp-offer-coupon-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  border-color: #9EFF00;
+  transform: translateY(-1px);
+}
+
+.sp-offer-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #9EFF00;
+  color: #1E1B4B;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 12px rgba(158, 255, 0, 0.4);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sp-offer-cta-btn:hover {
+  background: #A6FF1A;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(158, 255, 0, 0.6);
+}
+
+.sp-offer-graphic-wrap {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .sp-offer-graphic-wrap {
+    width: 190px;
+    height: 190px;
+    margin-bottom: 0;
+  }
+}
+
+.sp-offer-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.35));
+  transition: transform 300ms ease;
+}
+
+.sp-offer-carousel-wrap:hover .sp-offer-img {
+  transform: scale(1.06);
+}
+
+.sp-offer-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--transition-fast);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sp-offer-arrow:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.sp-offer-arrow.left {
+  left: 10px;
+}
+
+.sp-offer-arrow.right {
+  right: 10px;
+}
+
+.sp-offer-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+}
+
+.sp-offer-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  padding: 0;
+}
+
+.sp-offer-dot.active {
+  background: #9EFF00;
+  width: 22px;
+  border-radius: 999px;
+}
+

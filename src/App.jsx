@@ -20,6 +20,7 @@ import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import MobileBottomNav from './components/MobileBottomNav';
 import LoginModal from './components/LoginModal';
+import OfferBannerCarousel from './components/OfferBannerCarousel';
 import { productsData } from './data/products';
 
 export default function App() {
@@ -256,6 +257,12 @@ export default function App() {
 
       {/* 3. Hero Banner */}
       <HeroBanner selectedCity={selectedCity} />
+
+      {/* 3b. Moving Offer Banners Carousel */}
+      <OfferBannerCarousel
+        onSelectSubcat={setActiveSubcat}
+        onOpenDateModal={() => setIsDateModalOpen(true)}
+      />
 
       {/* 4. Subcategory Pills */}
       <SubcategoryTabs
