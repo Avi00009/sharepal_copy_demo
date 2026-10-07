@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, Check } from 'lucide-react';
+import { Plus, Check, Heart } from 'lucide-react';
 
 // Pricing formula matching SharePal exact pricing
 export function calculateSharePalPrice(product, days = 6) {
@@ -39,7 +39,7 @@ export function calculateSharePalPrice(product, days = 6) {
 
 export default function ProductCard({
   product,
-  billableDays = 6,
+  billableDays = 0,
   isWishlisted,
   isInCart,
   onToggleWishlist,
@@ -54,17 +54,37 @@ export default function ProductCard({
 
   return (
     <article className="sp-exact-product-card" aria-label={product.name}>
-      {/* Top Badge (New / Trending) */}
+      {/* Top Badge & Heart Area */}
       <div className="sp-exact-badge-area">
-        {product.tag === 'New' && (
-          <span className="sp-exact-badge-new">New</span>
-        )}
-        {product.tag === 'Trending' && (
-          <span className="sp-exact-badge-trending">Trending</span>
-        )}
-        {isVoteProduct && (
-          <span className="sp-exact-badge-vote">Vote to Launch</span>
-        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          {product.tag === 'New' && (
+            <span className="sp-exact-badge-new">New</span>
+          )}
+          {product.tag === 'Trending' && (
+            <span className="sp-exact-badge-trending">Trending</span>
+          )}
+          {isVoteProduct && (
+            <span className="sp-exact-badge-vote">Vote to Launch</span>
+          )}
+        </div>
+
+        <button
+          type="button"
+          className="sp-exact-heart-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleWishlist && onToggleWishlist(product.id);
+          }}
+          title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          aria-label="Wishlist"
+        >
+          <Heart
+            size={16}
+            fill={isWishlisted ? "#EF4444" : "none"}
+            color={isWishlisted ? "#EF4444" : "#CBD5E1"}
+            strokeWidth={1.8}
+          />
+        </button>
       </div>
 
       {/* Product Image */}
@@ -84,6 +104,22 @@ export default function ProductCard({
         />
       </div>
 
+      {/* Waitlist Box (Only for Vote to Launch products) */}
+      {isVoteProduct && (
+        <div className="sp-vote-waitlist-box">
+          <div className="sp-vote-waitlist-msg">
+            <span>✨ We launch if 1k people join the waitlist. Get notified first!</span>
+          </div>
+          <div className="sp-vote-progress-track">
+            <div
+              className="sp-vote-progress-fill"
+              style={{ width: `${Math.min(100, Math.max(12, (product.booked_count || 16) / 10))}%` }}
+            />
+            <span className="sp-vote-progress-text">{product.booked_count || 16}/1000 Joined</span>
+          </div>
+        </div>
+      )}
+
       {/* Title */}
       <h3
         className="sp-exact-title"
@@ -96,38 +132,53 @@ export default function ProductCard({
       {/* Faint Divider */}
       <div className="sp-exact-card-divider" />
 
-      {/* Pricing & Plus Action */}
-      <div className="sp-exact-pricing-row">
-        <div className="sp-exact-pricing-left">
-          <div className="sp-exact-rent-days">
-            Rent for <strong>{displayDays}</strong> days
+      {/* Pricing / Action */}
+      {isVoteProduct ? (
+        <button
+          type="button"
+          className="sp-vote-join-btn"
+          onClick={() => onVote(product.id)}
+          title="Join Waitlist"
+        >
+          Join Waitlist
+        </button>
+      ) : isOutOfStock ? (
+        <span className="sp-exact-out-pill">Out of Stock</span>
+      ) : !billableDays ? (
+        <div className="sp-select-dates-action">
+          <span className="sp-select-dates-hint">Select Dates to view price</span>
+          <div className="sp-blurred-price">
+            <span className="sp-currency">₹</span>
+            <span className="sp-blur-dots">••••</span>
           </div>
-          <div className="sp-exact-price">
-            ₹{totalPrice.toLocaleString('en-IN')}
-          </div>
-          <div className="sp-exact-gst-badge">
-            Incl. of GST
-          </div>
+          <button
+            type="button"
+            className="sp-exact-add-btn"
+            onClick={() => onAddToCart(product)}
+          >
+            {isInCart ? 'Added' : 'Add to Cart'}
+          </button>
         </div>
+      ) : (
+        <div className="sp-exact-pricing-row">
+          <div className="sp-exact-pricing-left">
+            <div className="sp-exact-rent-days">
+              Rent for <strong>{displayDays}</strong> days
+            </div>
+            <div className="sp-exact-price">
+              ₹{totalPrice.toLocaleString('en-IN')}
+            </div>
+            <div className="sp-exact-gst-badge">
+              Incl. of GST
+            </div>
+          </div>
 
-        <div className="sp-exact-action-right">
-          {isOutOfStock ? (
-            <span className="sp-exact-out-pill">Out of Stock</span>
-          ) : isVoteProduct ? (
-            <button
-              type="button"
-              className="sp-exact-vote-btn"
-              onClick={() => onVote(product.id)}
-              title="Vote to bring this device to Bangalore!"
-            >
-              Vote
-            </button>
-          ) : (
+          <div className="sp-exact-action-right">
             <button
               type="button"
               className={`sp-exact-plus-btn ${isInCart ? 'in-cart' : ''}`}
               onClick={() => onAddToCart(product)}
-              title={isInCart ? 'Added to cart (click to add another)' : 'Add to cart'}
+              title={isInCart ? 'Added to cart' : 'Add to cart'}
               aria-label={`Add ${product.name} to cart`}
             >
               {isInCart ? (
@@ -136,9 +187,9 @@ export default function ProductCard({
                 <Plus size={18} strokeWidth={2} />
               )}
             </button>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </article>
   );
 }

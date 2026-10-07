@@ -34,23 +34,11 @@ export default function App() {
   // Location & Dates
   const [selectedCity, setSelectedCity] = useState('Bangalore');
 
-  // Initial dates: tomorrow & +7 days (6 billable days, exactly matching SharePal default)
-  const getInitialDates = () => {
-    const today = new Date();
-    const dDeliv = new Date(today.getTime() + 86400000);
-    const dPick = new Date(dDeliv.getTime() + 7 * 86400000);
-    return {
-      delivery: dDeliv.toISOString().split('T')[0],
-      pickup: dPick.toISOString().split('T')[0],
-      days: 6
-    };
-  };
-
-  const initialDates = getInitialDates();
-  const [deliveryDate, setDeliveryDate] = useState(initialDates.delivery);
-  const [pickupDate, setPickupDate] = useState(initialDates.pickup);
-  const [billableDays, setBillableDays] = useState(initialDates.days);
-  const [isDatesConfirmed, setIsDatesConfirmed] = useState(true);
+  // Initial dates: null by default matching SharePal initial browsing state
+  const [deliveryDate, setDeliveryDate] = useState(null);
+  const [pickupDate, setPickupDate] = useState(null);
+  const [billableDays, setBillableDays] = useState(0);
+  const [isDatesConfirmed, setIsDatesConfirmed] = useState(false);
 
   // Category & Subcategory Navigation
   const [activeCategory, setActiveCategory] = useState('gaming');
@@ -61,7 +49,7 @@ export default function App() {
 
   // Modals & Drawers
   const [isCityModalOpen, setIsCityModalOpen] = useState(false);
-  const [isDateModalOpen, setIsDateModalOpen] = useState(true);
+  const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
@@ -260,19 +248,27 @@ export default function App() {
       {/* 3. Gaming Consoles Hero Banner */}
       <HeroBanner selectedCity={selectedCity} />
 
-      {/* 3b. Moving Offer Banners Carousel */}
-      <OfferBannerCarousel
-        onSelectSubcat={setActiveSubcat}
-        onOpenDateModal={() => setIsDateModalOpen(true)}
-      />
+      {/* 3b. Moving Offer Banners Carousel (Desktop only) */}
+      <div className="sp-hide-on-mobile">
+        <OfferBannerCarousel
+          onSelectSubcat={setActiveSubcat}
+          onOpenDateModal={() => setIsDateModalOpen(true)}
+        />
+      </div>
 
-      {/* 4. Top Earn with SharePal Credits Bar */}
-      <div className="sp-container" style={{ marginBottom: '1.25rem' }}>
+      {/* 4. Top Earn with SharePal Credits Bar (Desktop only) */}
+      <div className="sp-container sp-hide-on-mobile" style={{ marginBottom: '1.25rem' }}>
         <EarnCreditsBar />
       </div>
 
-      {/* 5. Product Catalog with Sticky Subcategory Sidebar & 4-Column Grid */}
+      {/* 5. Product Catalog with Sticky Subcategory Sidebar & Products Grid */}
       <main className="sp-container" id="sp-catalog-section">
+        {/* Catalog Header Bar: Gaming Gadgets On Rent | 50 items */}
+        <div className="sp-catalog-header-bar">
+          <h2 className="sp-catalog-title">Gaming Gadgets On Rent</h2>
+          <span className="sp-catalog-count">{filteredProducts.length} items</span>
+        </div>
+
         <div className="sp-catalog-layout">
           {/* Left Column: Sticky Subcategory Sidebar matching exact SharePal UI */}
           <StickySubcategorySidebar
