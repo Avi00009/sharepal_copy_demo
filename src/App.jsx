@@ -20,7 +20,6 @@ import WhatsAppFloat from './components/WhatsAppFloat';
 import MobileBottomNav from './components/MobileBottomNav';
 import LoginModal from './components/LoginModal';
 import OfferBannerCarousel from './components/OfferBannerCarousel';
-import SharePalHomeHero from './components/SharePalHomeHero';
 import StickySubcategorySidebar from './components/StickySubcategorySidebar';
 import EarnCreditsBar from './components/EarnCreditsBar';
 import RentOutGearBanner from './components/RentOutGearBanner';
@@ -255,13 +254,6 @@ export default function App() {
         }}
       />
 
-      {/* 2b. SharePal Homepage Hero with 3D Floating Gears & 4 Category Cards */}
-      <SharePalHomeHero
-        activeCategory={activeCategory}
-        onSelectCategory={(catId) => {
-          setActiveCategory(catId);
-        }}
-      />
 
       {/* 3. Gaming Consoles Hero Banner */}
       <HeroBanner selectedCity={selectedCity} />
