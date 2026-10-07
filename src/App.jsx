@@ -48,7 +48,8 @@ export default function App() {
   const [billableDays, setBillableDays] = useState(initialDates.days);
   const [isDatesConfirmed, setIsDatesConfirmed] = useState(true);
 
-  // Filters & Search
+  // Category & Subcategory Navigation
+  const [activeCategory, setActiveCategory] = useState('gaming');
   const [activeSubcat, setActiveSubcat] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('trending');
@@ -252,8 +253,17 @@ export default function App() {
         onOpenLoginModal={() => setIsLoginModalOpen(true)}
       />
 
-      {/* 2. Top Category Switcher */}
-      <CategoryNav activeCategory="gaming" />
+      {/* 2. Top Category Switcher with Floating Glide Animation */}
+      <CategoryNav
+        activeCategory={activeCategory}
+        onSelectCategory={(catId) => {
+          setActiveCategory(catId);
+          if (catId !== 'gaming') {
+            // Friendly prompt or preview
+            alert(`You selected ${catId.charAt(0).toUpperCase() + catId.slice(1)}! In this gaming assignment demo, gaming consoles remain active below.`);
+          }
+        }}
+      />
 
       {/* 3. Hero Banner */}
       <HeroBanner selectedCity={selectedCity} />

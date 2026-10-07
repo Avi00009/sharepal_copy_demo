@@ -294,58 +294,101 @@ img {
 }
 
 /* ==========================================================================
-   CATEGORY BAR (Top Pill Swiper)
+   CATEGORY BAR (Floating Sticky Navigation with Gliding Indicator)
    ========================================================================== */
 .sp-category-nav-bar {
-  background: #F1F5F9;
-  border-bottom: 1px solid var(--color-border-subtle);
+  background: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
   position: sticky;
   top: 57px;
   z-index: 40;
+  transition: all 250ms ease;
 }
 
-.sp-category-tabs-wrap {
+@media (max-width: 1023px) {
+  .sp-category-nav-bar {
+    top: 86px;
+  }
+}
+
+.sp-category-nav-bar.floating-elevated {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 4px 18px rgba(76, 24, 124, 0.07), 0 2px 6px rgba(0, 0, 0, 0.04);
+  border-bottom-color: #EDE9FE;
+}
+
+.sp-category-tabs-container {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
+  padding: 0.65rem 0.5rem 0.75rem 0.5rem;
   overflow-x: auto;
   scrollbar-width: none;
-  padding: 0.6rem 1rem;
 }
 
-.sp-category-tabs-wrap::-webkit-scrollbar {
+.sp-category-tabs-container::-webkit-scrollbar {
   display: none;
 }
 
-.sp-cat-tab-item {
+@media (min-width: 640px) {
+  .sp-category-tabs-container {
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sp-category-tabs-container {
+    gap: 3.5rem;
+  }
+}
+
+.sp-category-tab-btn {
   position: relative;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-full);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #334155;
+  padding: 0.3rem 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
   white-space: nowrap;
-  transition: color var(--transition-fast);
+  letter-spacing: -0.01em;
+  transition: color 180ms ease, transform 150ms ease;
+  user-select: none;
 }
 
-.sp-cat-tab-item:hover {
+@media (min-width: 768px) {
+  .sp-category-tab-btn {
+    font-size: 1.05rem;
+  }
+}
+
+.sp-category-tab-btn:hover {
   color: var(--color-primary-purple);
+  transform: translateY(-1px);
 }
 
-.sp-cat-tab-item.active {
+.sp-category-tab-btn.active {
   color: var(--color-primary-purple);
   font-weight: 700;
 }
 
-.sp-cat-indicator {
+/* Gliding Floating Indicator Pill */
+.sp-floating-indicator-bar {
   position: absolute;
-  bottom: -4px;
-  left: 20%;
-  right: 20%;
-  height: 3px;
-  border-radius: 999px;
-  background-color: var(--color-secondary-purple);
+  bottom: 2px;
+  left: 0;
+  height: 3.5px;
+  border-radius: 9999px;
+  background: #8A2BE2;
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.45);
+  pointer-events: none;
+  transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              width 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 200ms ease;
 }
 
 /* ==========================================================================
