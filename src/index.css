@@ -172,64 +172,76 @@ img {
   align-items: center;
   background: #FFFFFF;
   border-radius: var(--radius-full);
-  padding: 3px;
-  border: 2px solid var(--color-secondary-purple);
-  box-shadow: var(--shadow-sm);
+  border: 2px solid #8A2BE2;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  height: 42px;
 }
 
 .sp-city-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
-  background: #EAE6F0;
-  border-radius: var(--radius-full) 0 0 var(--radius-full);
+  height: 100%;
+  padding: 0 16px;
+  background: #E8EEF5;
+  border: none;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--color-primary-purple);
+  color: #0F172A;
+  cursor: pointer;
+  white-space: nowrap;
   transition: background var(--transition-fast);
 }
 
 .sp-city-btn:hover {
-  background: #D9D2E5;
+  background: #DCE5EE;
 }
 
 .sp-dates-trigger {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 16px;
-  font-size: 0.825rem;
-  color: var(--color-text-secondary);
+  gap: 20px;
+  padding: 0 18px;
+  height: 100%;
+  font-size: 0.84rem;
+  color: #0F172A;
   font-weight: 500;
   cursor: pointer;
+  background: #FFFFFF;
 }
 
-.sp-dates-trigger:hover {
-  color: var(--color-primary-purple);
-}
-
-.sp-dates-divider {
-  width: 1px;
-  height: 18px;
-  background-color: #E2E8F0;
+.sp-date-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  color: #0F172A;
+  font-size: 0.84rem;
+  font-weight: 500;
 }
 
 .sp-btn-select-dates {
-  background-color: var(--color-primary-purple);
+  background-color: #080E21;
   color: #FFFFFF;
-  font-weight: 600;
-  font-size: 0.825rem;
-  padding: 6px 14px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  height: 34px;
+  padding: 0 18px;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   gap: 6px;
+  border: none;
+  cursor: pointer;
+  margin-right: 4px;
+  margin-left: 4px;
   transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .sp-btn-select-dates:hover {
-  background-color: #350F59;
+  background-color: #1A243D;
   transform: scale(1.02);
 }
 

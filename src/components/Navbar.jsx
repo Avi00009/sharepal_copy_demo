@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Calendar, ChevronDown, Search, ShoppingBag, User } from 'lucide-react';
+import { MapPin, Calendar, CalendarPlus, ChevronDown, Search, ShoppingBag, User } from 'lucide-react';
 import SharePalLogo from './SharePalLogo';
 
 export default function Navbar({
@@ -65,14 +65,26 @@ export default function Navbar({
     };
   }, []);
 
-  const formatDateDisplay = (dateStr) => {
+  const formatOrdinalDate = (dateStr) => {
     if (!dateStr) return null;
     const d = new Date(dateStr);
-    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+    if (isNaN(d.getTime())) return null;
+    const day = d.getDate();
+    const month = d.toLocaleDateString('en-IN', { month: 'short' });
+    const getSuffix = (n) => {
+      if (n >= 11 && n <= 13) return 'th';
+      switch (n % 10) {
+        case 1: return 'st';
+        case 2: return 'nd';
+        case 3: return 'rd';
+        default: return 'th';
+      }
+    };
+    return `${day}${getSuffix(day)} ${month}`;
   };
 
-  const deliveryFormatted = formatDateDisplay(deliveryDate);
-  const pickupFormatted = formatDateDisplay(pickupDate);
+  const deliveryFormatted = formatOrdinalDate(deliveryDate);
+  const pickupFormatted = formatOrdinalDate(pickupDate);
 
   return (
     <header className={`sp-header ${isHidden ? 'sp-header--hidden' : ''}`}>
@@ -95,9 +107,9 @@ export default function Navbar({
               onClick={onOpenCityModal}
               title="Change City"
             >
-              <MapPin size={16} color="#4C187C" />
+              <MapPin size={15} color="#0F172A" />
               <span>{selectedCity}</span>
-              <ChevronDown size={14} color="#4C187C" />
+              <ChevronDown size={14} color="#0F172A" />
             </button>
 
             {/* Dates Trigger */}
@@ -106,26 +118,30 @@ export default function Navbar({
               onClick={onOpenDateModal}
               title="Select Rental Dates"
             >
-              <Calendar size={16} color="#64748B" />
-              {deliveryFormatted && pickupFormatted ? (
+              <div className="sp-date-item">
+                <CalendarPlus size={15} color="#0F172A" />
                 <span>
-                  {deliveryFormatted} - {pickupFormatted} ({billableDays}d)
+                  {deliveryFormatted ? `Delivery Date: ${deliveryFormatted}` : 'Delivery Date'}
                 </span>
-              ) : (
-                <span>Delivery Date &middot; Pickup Date</span>
-              )}
-            </div>
+              </div>
 
-            <div className="sp-dates-divider"></div>
+              <div className="sp-date-item">
+                <CalendarPlus size={15} color="#0F172A" />
+                <span>
+                  {pickupFormatted ? `Pickup Date: ${pickupFormatted}` : 'Pickup Date'}
+                </span>
+              </div>
+            </div>
 
             {/* CTA Button */}
             <button
               type="button"
               className="sp-btn-select-dates"
               onClick={onOpenDateModal}
+              title="Select Rental Dates"
             >
-              <Calendar size={14} />
-              <span>{deliveryFormatted ? 'Change' : 'Select'}</span>
+              <CalendarPlus size={15} color="#FFFFFF" strokeWidth={2.4} />
+              <span>Select</span>
             </button>
           </div>
 
@@ -244,33 +260,34 @@ export default function Navbar({
               background: '#FFFFFF',
               borderRadius: '999px',
               padding: '3px 4px 3px 12px',
-              border: '2px solid #8A2BE2'
+              border: '2px solid #8A2BE2',
+              cursor: 'pointer'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#334155', fontWeight: 600 }}>
-              <Calendar size={15} color="#4C187C" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#0F172A', fontWeight: 600 }}>
+              <CalendarPlus size={15} color="#0F172A" />
               <span>
-                {deliveryFormatted && pickupFormatted
-                  ? `${deliveryFormatted} - ${pickupFormatted} (${billableDays}d)`
-                  : 'Select Rental Dates'}
+                {deliveryFormatted ? `Delivery Date: ${deliveryFormatted}` : 'Delivery Date'}
               </span>
             </div>
             <button
               type="button"
               style={{
-                background: '#4C187C',
+                background: '#080E21',
                 color: '#FFFFFF',
                 borderRadius: '999px',
-                padding: '5px 12px',
+                padding: '5px 14px',
                 fontSize: '0.75rem',
                 fontWeight: 700,
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px'
+                gap: '4px',
+                border: 'none',
+                cursor: 'pointer'
               }}
             >
-              <Calendar size={12} />
-              {deliveryFormatted ? 'Change' : 'Select'}
+              <CalendarPlus size={12} color="#FFFFFF" strokeWidth={2.4} />
+              <span>Select</span>
             </button>
           </div>
         </div>
