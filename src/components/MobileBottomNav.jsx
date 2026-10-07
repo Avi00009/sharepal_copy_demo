@@ -17,7 +17,10 @@ export default function MobileBottomNav({
       <button
         type="button"
         className="sp-mobile-nav-item"
-        onClick={onOpenCategories}
+        onClick={(e) => {
+          e.preventDefault();
+          onOpenCategories?.();
+        }}
       >
         <Grid size={20} />
         <span>Category</span>
@@ -26,7 +29,10 @@ export default function MobileBottomNav({
       <button
         type="button"
         className="sp-mobile-nav-item"
-        onClick={onOpenSearch}
+        onClick={(e) => {
+          e.preventDefault();
+          onOpenSearch?.();
+        }}
       >
         <Search size={20} />
         <span>Search</span>
@@ -35,7 +41,10 @@ export default function MobileBottomNav({
       <button
         type="button"
         className="sp-mobile-nav-item"
-        onClick={onOpenCart}
+        onClick={(e) => {
+          e.preventDefault();
+          onOpenCart?.();
+        }}
         style={{ position: 'relative' }}
       >
         <ShoppingBag size={20} />
