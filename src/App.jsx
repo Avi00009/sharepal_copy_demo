@@ -22,6 +22,7 @@ import MobileBottomNav from './components/MobileBottomNav';
 import LoginModal from './components/LoginModal';
 import OfferBannerCarousel from './components/OfferBannerCarousel';
 import SharePalHomeHero from './components/SharePalHomeHero';
+import StickySubcategorySidebar from './components/StickySubcategorySidebar';
 import { productsData } from './data/products';
 
 export default function App() {
@@ -298,44 +299,55 @@ export default function App() {
         filteredCount={filteredProducts.length}
       />
 
-      {/* 6. Product Grid */}
+      {/* 6. Product Catalog with Sticky Subcategory Sidebar */}
       <main className="sp-container" id="sp-catalog-section">
-        {filteredProducts.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '4rem 1rem', background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', marginBottom: '3rem' }}>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1E293B', marginBottom: '0.5rem' }}>
-              No gaming consoles match your search
-            </h3>
-            <p style={{ fontSize: '0.875rem', color: '#64748B', marginBottom: '1.5rem' }}>
-              Try adjusting your filters or search keywords.
-            </p>
-            <button
-              type="button"
-              className="sp-btn-rent"
-              onClick={() => {
-                setSearchQuery('');
-                setActiveSubcat('all');
-                setInStockOnly(false);
-              }}
-            >
-              Reset Filters
-            </button>
+        <div className="sp-catalog-layout">
+          {/* Left Column: Sticky Subcategory Sidebar matching exact SharePal UI */}
+          <StickySubcategorySidebar
+            activeSubcat={activeSubcat}
+            onSelectSubcat={setActiveSubcat}
+          />
+
+          {/* Right Column: Products Grid */}
+          <div className="sp-products-main-col">
+            {filteredProducts.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '4rem 1rem', background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', marginBottom: '3rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1E293B', marginBottom: '0.5rem' }}>
+                  No gaming consoles match your search
+                </h3>
+                <p style={{ fontSize: '0.875rem', color: '#64748B', marginBottom: '1.5rem' }}>
+                  Try adjusting your filters or search keywords.
+                </p>
+                <button
+                  type="button"
+                  className="sp-btn-rent"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setActiveSubcat('all');
+                    setInStockOnly(false);
+                  }}
+                >
+                  Reset Filters
+                </button>
+              </div>
+            ) : (
+              <section className="sp-product-grid" aria-label="Available Gaming Consoles">
+                {filteredProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    billableDays={billableDays}
+                    isWishlisted={wishlist.includes(product.id)}
+                    onToggleWishlist={toggleWishlist}
+                    onSelectProduct={setDetailProduct}
+                    onAddToCart={addToCart}
+                    onVote={handleVote}
+                  />
+                ))}
+              </section>
+            )}
           </div>
-        ) : (
-          <section className="sp-product-grid" aria-label="Available Gaming Consoles">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                billableDays={billableDays}
-                isWishlisted={wishlist.includes(product.id)}
-                onToggleWishlist={toggleWishlist}
-                onSelectProduct={setDetailProduct}
-                onAddToCart={addToCart}
-                onVote={handleVote}
-              />
-            ))}
-          </section>
-        )}
+        </div>
       </main>
 
       {/* 7. Stats Section (250Cr+ Saved, 4.5M Kg CO2, 100K+ Products) */}
