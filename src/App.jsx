@@ -60,7 +60,7 @@ export default function App() {
 
   // Modals & Drawers
   const [isCityModalOpen, setIsCityModalOpen] = useState(false);
-  const [isDateModalOpen, setIsDateModalOpen] = useState(false);
+  const [isDateModalOpen, setIsDateModalOpen] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [detailProduct, setDetailProduct] = useState(null);
