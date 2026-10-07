@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { X, Trash2, Plus, Minus, ShoppingBag, ShieldCheck, Truck, ArrowRight, CheckCircle2 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 export default function CartDrawer({
   isOpen,
@@ -43,13 +42,6 @@ export default function CartDrawer({
     const genOrderId = "SP-" + Math.floor(100000 + Math.random() * 900000);
     setOrderId(genOrderId);
     setCheckoutStep('success');
-
-    // Confetti celebration!
-    confetti({
-      particleCount: 120,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
   };
 
   return (

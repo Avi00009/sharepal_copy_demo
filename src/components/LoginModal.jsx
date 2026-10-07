@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { X, Smartphone, ShieldCheck, CheckCircle2, ArrowRight, RefreshCw, User, LogOut } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import SharePalLogo from './SharePalLogo';
 
 export default function LoginModal({
@@ -135,11 +134,6 @@ export default function LoginModal({
       };
 
       onLoginSuccess(userObj);
-      confetti({
-        particleCount: 70,
-        spread: 60,
-        origin: { y: 0.6 }
-      });
       onClose();
     }, 500);
   };

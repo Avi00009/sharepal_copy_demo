@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import confetti from 'canvas-confetti';
 import Navbar from './components/Navbar';
 import CategoryNav from './components/CategoryNav';
 import HeroBanner from './components/HeroBanner';
@@ -141,11 +140,6 @@ export default function App() {
       return [...prev, { ...product, qty: 1 }];
     });
     setIsCartOpen(true);
-    confetti({
-      particleCount: 50,
-      spread: 60,
-      origin: { y: 0.8 }
-    });
   };
 
   const updateCartQty = (id, newQty) => {
@@ -181,11 +175,6 @@ export default function App() {
         p.id === productId ? { ...p, booked_count: p.booked_count + 1 } : p
       )
     );
-    confetti({
-      particleCount: 80,
-      spread: 70,
-      origin: { y: 0.7 }
-    });
     alert("🎉 Thanks for voting! PlayStation Portal Remote Player is now at the top of our next Bangalore launch batch.");
   };
 

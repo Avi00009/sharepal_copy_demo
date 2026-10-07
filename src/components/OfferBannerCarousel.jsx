@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Copy, Check, Sparkles, Tag, Gamepad2, ShieldCheck, Flame, Gift } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 const offers = [
   {
@@ -91,11 +90,6 @@ export default function OfferBannerCarousel({ onSelectSubcat, onOpenDateModal })
   const copyCode = (code) => {
     navigator.clipboard?.writeText(code);
     setCopiedCode(code);
-    confetti({
-      particleCount: 40,
-      spread: 50,
-      origin: { y: 0.4 }
-    });
     setTimeout(() => {
       setCopiedCode(null);
     }, 2500);
