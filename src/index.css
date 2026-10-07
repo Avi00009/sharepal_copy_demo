@@ -443,7 +443,14 @@ body.header-hidden .sp-category-nav-bar {
 
 @media (min-width: 1024px) {
   .sp-category-tabs-container {
-    gap: 3.5rem;
+    justify-content: flex-start;
+    padding-left: 0;
+    padding-right: 0;
+    gap: 3rem;
+  }
+
+  .sp-category-tab-btn:first-child {
+    padding-left: 0;
   }
 }
 

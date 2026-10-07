@@ -20,8 +20,8 @@ export default function CategoryNav({ activeCategory = 'gaming', onSelectCategor
       const containerRect = containerEl.getBoundingClientRect();
       const activeRect = activeEl.getBoundingClientRect();
 
-      // Width of the pill bar under the text
-      const barWidth = Math.max(34, Math.min(activeRect.width * 0.72, 48));
+      // Width of the line under the active category text
+      const barWidth = Math.max(40, activeRect.width - 10);
       const barLeft = (activeRect.left - containerRect.left) + (activeRect.width - barWidth) / 2;
 
       setIndicatorStyle({
