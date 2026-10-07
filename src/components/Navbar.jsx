@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Calendar, ChevronDown, Search, ShoppingBag, User } from 'lucide-react';
 import SharePalLogo from './SharePalLogo';
 
@@ -15,6 +15,56 @@ export default function Navbar({
   currentUser,
   onOpenLoginModal
 }) {
+  const [isHidden, setIsHidden] = useState(false);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // When near top of the page, always show header
+      if (currentScrollY <= 60) {
+        setIsHidden(false);
+        document.body.classList.remove('header-hidden');
+        lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
+        ticking = false;
+        return;
+      }
+
+      const diff = currentScrollY - lastScrollY;
+      // Ignore micro-jitters
+      if (Math.abs(diff) > 6) {
+        if (diff > 0 && currentScrollY > 70) {
+          // Scrolling down: hide header
+          setIsHidden(true);
+          document.body.classList.add('header-hidden');
+        } else if (diff < 0) {
+          // Scrolling up: reveal header
+          setIsHidden(false);
+          document.body.classList.remove('header-hidden');
+        }
+        lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
+      }
+
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.body.classList.remove('header-hidden');
+    };
+  }, []);
+
   const formatDateDisplay = (dateStr) => {
     if (!dateStr) return null;
     const d = new Date(dateStr);
@@ -25,7 +75,7 @@ export default function Navbar({
   const pickupFormatted = formatDateDisplay(pickupDate);
 
   return (
-    <header className="sp-header">
+    <header className={`sp-header ${isHidden ? 'sp-header--hidden' : ''}`}>
       <div className="sp-container">
         {/* Desktop View */}
         <div className="sp-header-inner" style={{ display: 'none' }} id="sp-desktop-header">
