@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Calendar, X, ChevronLeft, ChevronRight, Info, Percent } from 'lucide-react';
+import { Calendar, X, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 
 const MONTH_NAMES = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -24,7 +24,7 @@ function formatDateDisplay(dateStr) {
   const d = new Date(dateStr + 'T00:00:00');
   if (isNaN(d.getTime())) return '';
   const month = SHORT_MONTH_NAMES[d.getMonth()];
-  const day = String(d.getDate()).padStart(2, '0');
+  const day = d.getDate();
   const year = d.getFullYear();
   return `${month} ${day}, ${year}`;
 }
@@ -38,61 +38,56 @@ export default function DatePickerModal({
 }) {
   if (!isOpen) return null;
 
-  // Initialize dates
+  // Today reference
   const today = useMemo(() => {
     const t = new Date();
     t.setHours(0, 0, 0, 0);
     return t;
   }, []);
 
-  // Today string YYYY-MM-DD
   const todayStr = useMemo(() => {
     return today.toISOString().split('T')[0];
   }, [today]);
 
-  // Selected delivery & pickup
+  // Selected delivery & pickup dates
   const [selectedDelivery, setSelectedDelivery] = useState(() => {
     if (deliveryDate) return deliveryDate;
-    const d = new Date(today.getTime() + 86400000 * 2); // default 2 days out
+    const d = new Date(today.getTime() + 86400000); // tomorrow by default
     return d.toISOString().split('T')[0];
   });
 
   const [selectedPickup, setSelectedPickup] = useState(() => {
-    if (pickupDate) return pickupDate;
-    const d = new Date(today.getTime() + 86400000 * 9); // default 9 days out (7 days gap)
-    return d.toISOString().split('T')[0];
+    return pickupDate || null;
   });
 
   // Calendar View month (starts at delivery date month)
   const [viewYearMonth, setViewYearMonth] = useState(() => {
-    const initDate = selectedDelivery ? new Date(selectedDelivery + 'T00:00:00') : today;
+    const baseDate = selectedDelivery ? new Date(selectedDelivery + 'T00:00:00') : today;
     return {
-      year: initDate.getFullYear(),
-      month: initDate.getMonth()
+      year: baseDate.getFullYear(),
+      month: baseDate.getMonth()
     };
   });
 
-  // Hover state for interactive selection preview
   const [hoverDate, setHoverDate] = useState(null);
 
-  // Billable calculation
+  // Rental statistics calculation matching SharePal logic
   const rentalStats = useMemo(() => {
     if (!selectedDelivery || !selectedPickup) {
-      return { days: 0, chargeableText: 'Select dates', valid: false };
+      return { days: 0, chargeableText: '--', valid: false };
     }
 
     const dDeliv = new Date(selectedDelivery + 'T00:00:00');
     const dPick = new Date(selectedPickup + 'T00:00:00');
 
     if (dPick <= dDeliv) {
-      return { days: 0, chargeableText: 'Invalid period', valid: false };
+      return { days: 0, chargeableText: '--', valid: false };
     }
 
     const diffMs = dPick.getTime() - dDeliv.getTime();
     const rawDiffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
 
-    // SharePal policy: rental starts day after delivery and ends day before pickup
-    // E.g. Nov 3 to Nov 10 => 7 raw days. Chargeable is Nov 4 to Nov 9 (6 days).
+    // SharePal charges for days between delivery and pickup
     const billableDays = Math.max(1, rawDiffDays - 1);
 
     const chargeStart = new Date(dDeliv.getTime() + 86400000);
@@ -108,7 +103,7 @@ export default function DatePickerModal({
     };
   }, [selectedDelivery, selectedPickup]);
 
-  // Navigate calendar months
+  // Calendar month navigation
   const handlePrevMonth = () => {
     setViewYearMonth((prev) => {
       let newMonth = prev.month - 1;
@@ -133,21 +128,18 @@ export default function DatePickerModal({
     });
   };
 
-  // Date selection handling
+  // Date click logic
   const handleDateClick = (dateStr) => {
     if (!selectedDelivery || (selectedDelivery && selectedPickup)) {
-      // First click: start new range
+      // First click: sets delivery date
       setSelectedDelivery(dateStr);
       setSelectedPickup(null);
     } else if (selectedDelivery && !selectedPickup) {
-      // Second click: finish range
-      if (dateStr < selectedDelivery) {
+      // Second click: sets pickup date
+      if (dateStr <= selectedDelivery) {
+        // Clicked before or on delivery: reset delivery to new date
         setSelectedDelivery(dateStr);
         setSelectedPickup(null);
-      } else if (dateStr === selectedDelivery) {
-        // Same date: must be at least 2 days apart for SharePal rental
-        const nextDay = new Date(new Date(dateStr + 'T00:00:00').getTime() + 86400000 * 2);
-        setSelectedPickup(nextDay.toISOString().split('T')[0]);
       } else {
         setSelectedPickup(dateStr);
       }
@@ -157,21 +149,20 @@ export default function DatePickerModal({
   // Submit
   const handleContinue = () => {
     if (!rentalStats.valid || !selectedDelivery || !selectedPickup) {
-      alert('Please select both delivery and pickup dates.');
       return;
     }
     onApplyDates(selectedDelivery, selectedPickup, rentalStats.days);
     onClose();
   };
 
-  // Generate month data helper
+  // Build grid data for a month
   const getMonthDays = (year, month) => {
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const startWeekday = firstDay.getDay(); // 0 is Sunday
     const totalDays = lastDay.getDate();
 
-    // Days from previous month
+    // Previous month filler days
     const prevMonthLastDay = new Date(year, month, 0).getDate();
     const prevDays = [];
     for (let i = startWeekday - 1; i >= 0; i--) {
@@ -182,7 +173,7 @@ export default function DatePickerModal({
       });
     }
 
-    // Days in current month
+    // Current month days
     const currentDays = [];
     for (let i = 1; i <= totalDays; i++) {
       const monthPadded = String(month + 1).padStart(2, '0');
@@ -197,7 +188,7 @@ export default function DatePickerModal({
       });
     }
 
-    // Days from next month to fill complete weeks
+    // Next month filler days to complete rows
     const remaining = (7 - ((prevDays.length + currentDays.length) % 7)) % 7;
     const nextDays = [];
     for (let i = 1; i <= remaining; i++) {
@@ -211,7 +202,6 @@ export default function DatePickerModal({
     return [...prevDays, ...currentDays, ...nextDays];
   };
 
-  // Month 1 and Month 2 definitions
   const month1 = viewYearMonth;
   const month2 = useMemo(() => {
     let m = viewYearMonth.month + 1;
@@ -226,7 +216,7 @@ export default function DatePickerModal({
   const month1Days = useMemo(() => getMonthDays(month1.year, month1.month), [month1]);
   const month2Days = useMemo(() => getMonthDays(month2.year, month2.month), [month2]);
 
-  // Check date role helper
+  // Check selection status of a cell
   const getDateStatus = (dateStr) => {
     if (!dateStr) return { isStart: false, isEnd: false, isInRange: false };
 
@@ -246,7 +236,7 @@ export default function DatePickerModal({
   return (
     <div className="sp-cal-overlay" onClick={onClose} role="dialog" aria-modal="true">
       <div className="sp-cal-modal-container" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
+        {/* Top Header */}
         <div className="sp-cal-header">
           <h2 className="sp-cal-title">Select your Dates</h2>
           <button
@@ -255,24 +245,24 @@ export default function DatePickerModal({
             onClick={onClose}
             aria-label="Close date picker"
           >
-            <X size={20} />
+            <X size={16} />
           </button>
         </div>
 
-        {/* Main Content: 2-Column Split */}
+        {/* 2-Column Layout */}
         <div className="sp-cal-body">
-          {/* Left Column: Inputs & Duration & Savings & Action */}
+          {/* Left Column: Inputs, Info Box, Rental Period, Savings Card, Continue */}
           <div className="sp-cal-left-col">
-            {/* Delivery & Pickup Inputs */}
+            {/* Delivery Date & Pickup Date Inputs */}
             <div className="sp-cal-inputs-row">
               <div className="sp-cal-input-group">
                 <label className="sp-cal-input-label">
                   Delivery Date <span className="sp-cal-required">*</span>
                 </label>
                 <div className="sp-cal-input-box">
-                  <Calendar size={17} className="sp-cal-input-icon" />
-                  <span className="sp-cal-input-text">
-                    {formatDateDisplay(selectedDelivery) || 'Select date'}
+                  <Calendar size={15} className="sp-cal-input-icon" />
+                  <span className={`sp-cal-input-text ${selectedDelivery ? 'filled' : 'placeholder'}`}>
+                    {selectedDelivery ? formatDateDisplay(selectedDelivery) : 'Select delivery date'}
                   </span>
                 </div>
               </div>
@@ -282,25 +272,25 @@ export default function DatePickerModal({
                   Pickup Date <span className="sp-cal-required">*</span>
                 </label>
                 <div className="sp-cal-input-box">
-                  <Calendar size={17} className="sp-cal-input-icon" />
-                  <span className="sp-cal-input-text">
-                    {formatDateDisplay(selectedPickup) || 'Select date'}
+                  <Calendar size={15} className="sp-cal-input-icon" />
+                  <span className={`sp-cal-input-text ${selectedPickup ? 'filled' : 'placeholder'}`}>
+                    {selectedPickup ? formatDateDisplay(selectedPickup) : 'Select pickup date'}
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Same-Day & Slot Info Banner */}
+            {/* Same-day & delivery info banner */}
             <div className="sp-cal-info-card">
               <div className="sp-cal-info-icon-wrapper">
-                <Info size={16} />
+                <Info size={15} />
               </div>
               <p className="sp-cal-info-text">
                 <strong>Same-day delivery</strong> between <strong>5PM and 11PM</strong> For future dates, you can select a specific time slot available at checkout. We pickup between <strong>9AM to 1PM</strong>.
               </p>
             </div>
 
-            {/* Rental Period Card */}
+            {/* Your Rental Period Card */}
             <div className="sp-cal-period-section">
               <span className="sp-cal-period-title">Your Rental Period:</span>
               <div className="sp-cal-period-card">
@@ -308,12 +298,12 @@ export default function DatePickerModal({
                   <span className="sp-cal-days-num">
                     {String(rentalStats.days).padStart(2, '0')}
                   </span>
-                  <span className="sp-cal-days-unit">Days</span>
+                  <span className="sp-cal-days-unit">Day</span>
                 </div>
                 <div className="sp-cal-chargeable-wrap">
                   <span className="sp-cal-chargeable-label">Chargeable Period:</span>
                   <div className="sp-cal-chargeable-val">
-                    <Calendar size={15} className="sp-cal-charge-icon" />
+                    <Calendar size={14} className="sp-cal-charge-icon" />
                     <span>{rentalStats.chargeableText}</span>
                   </div>
                 </div>
@@ -324,7 +314,13 @@ export default function DatePickerModal({
             <div className="sp-cal-savings-card">
               <div className="sp-cal-savings-header">
                 <div className="sp-cal-savings-badge">
-                  <Percent size={14} strokeWidth={3} />
+                  {/* Burst Coupon Badge SVG matching original image */}
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A3E635" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+                    <line x1="9" y1="15" x2="15" y2="9" />
+                    <circle cx="9.5" cy="9.5" r="0.8" fill="#A3E635" />
+                    <circle cx="14.5" cy="14.5" r="0.8" fill="#A3E635" />
+                  </svg>
                 </div>
                 <h4 className="sp-cal-savings-heading">Save more with us!</h4>
               </div>
@@ -344,10 +340,10 @@ export default function DatePickerModal({
             </button>
           </div>
 
-          {/* Right Column: 2-Month Dual Calendar */}
+          {/* Right Column: 2-Month Dual Calendar with Clean White Card Container */}
           <div className="sp-cal-right-col">
             <div className="sp-cal-dual-wrapper">
-              {/* Header Navigation */}
+              {/* Header Navigation with Month Titles and Arrows */}
               <div className="sp-cal-nav-bar">
                 <button
                   type="button"
@@ -355,7 +351,7 @@ export default function DatePickerModal({
                   onClick={handlePrevMonth}
                   aria-label="Previous month"
                 >
-                  <ChevronLeft size={18} />
+                  <ChevronLeft size={16} />
                 </button>
 
                 <div className="sp-cal-month-titles">
@@ -373,7 +369,7 @@ export default function DatePickerModal({
                   onClick={handleNextMonth}
                   aria-label="Next month"
                 >
-                  <ChevronRight size={18} />
+                  <ChevronRight size={16} />
                 </button>
               </div>
 
