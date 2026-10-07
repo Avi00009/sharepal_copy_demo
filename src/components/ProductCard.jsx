@@ -146,27 +146,38 @@ export default function ProductCard({
       ) : isOutOfStock ? (
         <span className="sp-exact-out-pill">Out of Stock</span>
       ) : !billableDays ? (
-        <div
-          className="sp-select-dates-action"
-          onClick={onOpenDateModal}
-          style={{ cursor: 'pointer' }}
-          title="Select rental dates to view price"
-        >
-          <span className="sp-select-dates-hint">Select Dates to view price</span>
-          <div className="sp-blurred-price">
-            <span className="sp-currency">₹</span>
-            <span className="sp-blur-dots">••••</span>
-          </div>
-          <button
-            type="button"
-            className="sp-exact-add-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpenDateModal?.();
-            }}
+        <div className="sp-exact-pricing-row">
+          <div
+            className="sp-exact-pricing-left"
+            onClick={onOpenDateModal}
+            style={{ cursor: 'pointer' }}
+            title="Select rental dates to view price"
           >
-            {isInCart ? 'Added' : 'Add to Cart'}
-          </button>
+            <span className="sp-select-dates-hint">Select Dates to view price</span>
+            <div className="sp-blurred-price">
+              <span className="sp-currency">₹</span>
+              <span className="sp-blur-number">{totalPrice.toLocaleString('en-IN')}</span>
+            </div>
+          </div>
+
+          <div className="sp-exact-action-right">
+            <button
+              type="button"
+              className={`sp-exact-plus-btn ${isInCart ? 'in-cart' : ''}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenDateModal?.();
+              }}
+              title="Select rental dates"
+              aria-label={`Select rental dates for ${product.name}`}
+            >
+              {isInCart ? (
+                <Check size={18} strokeWidth={2.4} />
+              ) : (
+                <Plus size={18} strokeWidth={2.4} />
+              )}
+            </button>
+          </div>
         </div>
       ) : (
         <div className="sp-exact-pricing-row">
