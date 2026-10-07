@@ -191,7 +191,19 @@ export default function Navbar({
         {/* Mobile View */}
         <div id="sp-mobile-header" style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '8px 0' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <a href="#" className="sp-logo-badge" style={{ padding: '6px 12px' }}>
+            <a
+              href="#"
+              style={{
+                background: '#1945E8',
+                borderRadius: '8px',
+                padding: '6px 14px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                boxShadow: '0 4px 12px rgba(25, 69, 232, 0.35)',
+                textDecoration: 'none'
+              }}
+              title="SharePal Home"
+            >
               <SharePalLogo height={20} />
             </a>
 
@@ -202,50 +214,47 @@ export default function Navbar({
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '4px',
-                  background: '#62229E',
+                  gap: '5px',
+                  background: '#7C3AED',
                   color: '#FFFFFF',
-                  padding: '4px 10px',
+                  padding: '6px 12px',
                   borderRadius: '999px',
-                  fontSize: '0.75rem',
-                  fontWeight: 600
+                  fontSize: '0.8rem',
+                  fontWeight: 600,
+                  border: 'none',
+                  cursor: 'pointer'
                 }}
               >
-                <MapPin size={13} />
+                <MapPin size={13} color="#FFFFFF" />
                 <span>{selectedCity}</span>
-                <ChevronDown size={12} />
-              </button>
-
-              <button
-                type="button"
-                onClick={onOpenCart}
-                style={{ position: 'relative', color: '#FFFFFF', padding: '4px' }}
-                aria-label="Cart"
-              >
-                <ShoppingBag size={20} />
-                {cartCount > 0 && <span className="sp-cart-badge">{cartCount}</span>}
+                <ChevronDown size={13} color="#FFFFFF" />
               </button>
 
               <button
                 type="button"
                 onClick={onOpenLoginModal}
                 style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '999px',
-                  background: '#FFFFFF',
-                  color: '#4C187C',
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '50%',
+                  background: 'transparent',
+                  border: '2px solid rgba(255, 255, 255, 0.9)',
+                  color: '#FFFFFF',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontWeight: 700,
-                  fontSize: '0.75rem',
-                  border: 'none',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  padding: 0
                 }}
                 aria-label="User account"
               >
-                {currentUser ? currentUser.name.charAt(0).toUpperCase() : <User size={16} />}
+                {currentUser ? (
+                  <span style={{ fontWeight: 700, fontSize: '0.8rem' }}>
+                    {currentUser.name.charAt(0).toUpperCase()}
+                  </span>
+                ) : (
+                  <User size={18} color="#FFFFFF" strokeWidth={2.2} />
+                )}
               </button>
             </div>
           </div>
@@ -259,15 +268,19 @@ export default function Navbar({
               justifyContent: 'space-between',
               background: '#FFFFFF',
               borderRadius: '999px',
-              padding: '3px 4px 3px 12px',
+              padding: '0 4px 0 14px',
               border: '2px solid #8A2BE2',
+              height: '40px',
+              boxSizing: 'border-box',
               cursor: 'pointer'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#0F172A', fontWeight: 600 }}>
-              <CalendarPlus size={15} color="#0F172A" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '7px', fontSize: '0.85rem', color: '#0F172A', fontWeight: 600 }}>
+              <CalendarPlus size={16} color="#0F172A" />
               <span>
-                {deliveryFormatted ? `Delivery Date: ${deliveryFormatted}` : 'Delivery Date'}
+                {deliveryFormatted && pickupFormatted
+                  ? `${deliveryFormatted} - ${pickupFormatted}`
+                  : 'Select Rental Dates'}
               </span>
             </div>
             <button
@@ -276,12 +289,13 @@ export default function Navbar({
                 background: '#080E21',
                 color: '#FFFFFF',
                 borderRadius: '999px',
-                padding: '5px 14px',
-                fontSize: '0.75rem',
+                padding: '0 14px',
+                height: '30px',
+                fontSize: '0.8rem',
                 fontWeight: 700,
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px',
+                gap: '5px',
                 border: 'none',
                 cursor: 'pointer'
               }}

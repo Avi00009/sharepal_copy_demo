@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { mainCategories } from '../data/categories';
 
 export default function CategoryNav({ activeCategory = 'gaming', onSelectCategory }) {
@@ -46,42 +47,74 @@ export default function CategoryNav({ activeCategory = 'gaming', onSelectCategor
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollLeft = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollBy({ left: -140, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollBy({ left: 140, behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav
       className={`sp-category-nav-bar ${isScrolled ? 'floating-elevated' : ''}`}
       aria-label="Main Categories"
     >
       <div className="sp-container">
-        <div
-          ref={containerRef}
-          className="sp-category-tabs-container"
-        >
-          {mainCategories.map((cat) => {
-            const isActive = cat.id === activeCategory;
-            return (
-              <button
-                key={cat.id}
-                ref={(el) => (tabRefs.current[cat.id] = el)}
-                type="button"
-                className={`sp-category-tab-btn ${isActive ? 'active' : ''}`}
-                onClick={() => {
-                  onSelectCategory && onSelectCategory(cat.id);
-                }}
-              >
-                <span>{cat.name}</span>
-              </button>
-            );
-          })}
+        <div className="sp-category-nav-inner">
+          <button
+            type="button"
+            className="sp-category-arrow sp-category-arrow-left"
+            onClick={scrollLeft}
+            aria-label="Scroll categories left"
+          >
+            <ChevronLeft size={16} />
+          </button>
 
-          {/* Smooth Floating Glide Indicator Bar */}
           <div
-            className="sp-floating-indicator-bar"
-            style={{
-              transform: `translateX(${indicatorStyle.left}px)`,
-              width: `${indicatorStyle.width}px`,
-              opacity: indicatorStyle.opacity
-            }}
-          />
+            ref={containerRef}
+            className="sp-category-tabs-container"
+          >
+            {mainCategories.map((cat) => {
+              const isActive = cat.id === activeCategory;
+              return (
+                <button
+                  key={cat.id}
+                  ref={(el) => (tabRefs.current[cat.id] = el)}
+                  type="button"
+                  className={`sp-category-tab-btn ${isActive ? 'active' : ''}`}
+                  onClick={() => {
+                    onSelectCategory && onSelectCategory(cat.id);
+                  }}
+                >
+                  <span>{cat.name}</span>
+                </button>
+              );
+            })}
+
+            {/* Smooth Floating Glide Indicator Bar */}
+            <div
+              className="sp-floating-indicator-bar"
+              style={{
+                transform: `translateX(${indicatorStyle.left}px)`,
+                width: `${indicatorStyle.width}px`,
+                opacity: indicatorStyle.opacity
+              }}
+            />
+          </div>
+
+          <button
+            type="button"
+            className="sp-category-arrow sp-category-arrow-right"
+            onClick={scrollRight}
+            aria-label="Scroll categories right"
+          >
+            <ChevronRight size={16} />
+          </button>
         </div>
       </div>
     </nav>
