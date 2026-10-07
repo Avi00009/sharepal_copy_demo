@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function HeroBanner() {
   return (
-    <div className="sp-container">
+    <div className="sp-hero-banner-container">
       <section className="sp-hero-banner" aria-label="Gaming Consoles Hero">
         {/* Left Text Content */}
         <div className="sp-hero-content">

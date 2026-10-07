@@ -236,17 +236,17 @@ export default function App() {
         onOpenLoginModal={() => setIsLoginModalOpen(true)}
       />
 
-      {/* 2. Top Category Switcher with Floating Glide Animation */}
-      <CategoryNav
-        activeCategory={activeCategory}
-        onSelectCategory={(catId) => {
-          setActiveCategory(catId);
-        }}
-      />
+      {/* 2. Upper Purple Section (Category Navigation & Hero Banner) */}
+      <div className="sp-upper-purple-wrapper">
+        <CategoryNav
+          activeCategory={activeCategory}
+          onSelectCategory={(catId) => {
+            setActiveCategory(catId);
+          }}
+        />
 
-
-      {/* 3. Gaming Consoles Hero Banner */}
-      <HeroBanner selectedCity={selectedCity} />
+        <HeroBanner />
+      </div>
 
       {/* 3b. Moving Offer Banners Carousel (Desktop only) */}
       <div className="sp-hide-on-mobile">
@@ -263,12 +263,6 @@ export default function App() {
 
       {/* 5. Product Catalog with Sticky Subcategory Sidebar & Products Grid */}
       <main className="sp-container" id="sp-catalog-section">
-        {/* Catalog Header Bar: Gaming Gadgets On Rent | 50 items */}
-        <div className="sp-catalog-header-bar">
-          <h2 className="sp-catalog-title">Gaming Gadgets On Rent</h2>
-          <span className="sp-catalog-count">{filteredProducts.length} items</span>
-        </div>
-
         <div className="sp-catalog-layout">
           {/* Left Column: Sticky Subcategory Sidebar matching exact SharePal UI */}
           <StickySubcategorySidebar
@@ -278,6 +272,12 @@ export default function App() {
 
           {/* Right Column: Products Grid & Mid-page Banner */}
           <div className="sp-products-main-col">
+            {/* Catalog Header Bar: Gaming Gadgets On Rent | 50 items */}
+            <div className="sp-catalog-header-bar">
+              <h2 className="sp-catalog-title">Gaming Gadgets On Rent</h2>
+              <span className="sp-catalog-count">50 items</span>
+            </div>
+            <div className="sp-catalog-header-divider" />
             {filteredProducts.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '4rem 1rem', background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', marginBottom: '3rem' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1E293B', marginBottom: '0.5rem' }}>
