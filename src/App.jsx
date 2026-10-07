@@ -48,9 +48,9 @@ export default function App() {
   const [sortBy, setSortBy] = useState('trending');
   const [inStockOnly, setInStockOnly] = useState(false);
 
-  // Modals & Drawers
+  // Modals & Drawers (Date modal pops up automatically on reload)
   const [isCityModalOpen, setIsCityModalOpen] = useState(false);
-  const [isDateModalOpen, setIsDateModalOpen] = useState(false);
+  const [isDateModalOpen, setIsDateModalOpen] = useState(true);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
