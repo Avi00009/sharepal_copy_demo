@@ -124,6 +124,10 @@ export default function App() {
 
   // Cart operations
   const addToCart = (product) => {
+    if (!billableDays || !deliveryDate || !pickupDate) {
+      setIsDateModalOpen(true);
+      return;
+    }
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product.id);
       if (existing) {
@@ -312,6 +316,7 @@ export default function App() {
                       onSelectProduct={setDetailProduct}
                       onAddToCart={addToCart}
                       onVote={handleVote}
+                      onOpenDateModal={() => setIsDateModalOpen(true)}
                     />
                   ))}
                 </section>
@@ -335,6 +340,7 @@ export default function App() {
                         onSelectProduct={setDetailProduct}
                         onAddToCart={addToCart}
                         onVote={handleVote}
+                        onOpenDateModal={() => setIsDateModalOpen(true)}
                       />
                     ))}
                   </section>

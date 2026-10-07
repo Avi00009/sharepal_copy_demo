@@ -142,6 +142,11 @@ export default function ProductDetailModal({
               <button
                 type="button"
                 onClick={() => {
+                  if (!billableDays) {
+                    onOpenDateModal?.();
+                    onClose();
+                    return;
+                  }
                   onAddToCart(product);
                   onClose();
                 }}

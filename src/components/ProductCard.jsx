@@ -45,7 +45,8 @@ export default function ProductCard({
   onToggleWishlist,
   onSelectProduct,
   onAddToCart,
-  onVote
+  onVote,
+  onOpenDateModal
 }) {
   const isOutOfStock = product.out_of_stock;
   const isVoteProduct = product.tag === 'Vote to Launch';
@@ -145,7 +146,12 @@ export default function ProductCard({
       ) : isOutOfStock ? (
         <span className="sp-exact-out-pill">Out of Stock</span>
       ) : !billableDays ? (
-        <div className="sp-select-dates-action">
+        <div
+          className="sp-select-dates-action"
+          onClick={onOpenDateModal}
+          style={{ cursor: 'pointer' }}
+          title="Select rental dates to view price"
+        >
           <span className="sp-select-dates-hint">Select Dates to view price</span>
           <div className="sp-blurred-price">
             <span className="sp-currency">₹</span>
@@ -154,7 +160,10 @@ export default function ProductCard({
           <button
             type="button"
             className="sp-exact-add-btn"
-            onClick={() => onAddToCart(product)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenDateModal?.();
+            }}
           >
             {isInCart ? 'Added' : 'Add to Cart'}
           </button>

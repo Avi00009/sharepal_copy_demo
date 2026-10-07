@@ -263,7 +263,10 @@ export default function Navbar({
 
           {/* Date Selector Row on Mobile */}
           <div
-            onClick={onOpenDateModal}
+            onClick={(e) => {
+              e.preventDefault();
+              onOpenDateModal?.();
+            }}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -274,7 +277,8 @@ export default function Navbar({
               border: '2px solid #8A2BE2',
               height: '40px',
               boxSizing: 'border-box',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              touchAction: 'manipulation'
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '7px', fontSize: '0.85rem', color: '#0F172A', fontWeight: 600 }}>
@@ -287,6 +291,10 @@ export default function Navbar({
             </div>
             <button
               type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenDateModal?.();
+              }}
               style={{
                 background: '#080E21',
                 color: '#FFFFFF',
@@ -299,7 +307,8 @@ export default function Navbar({
                 alignItems: 'center',
                 gap: '5px',
                 border: 'none',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                touchAction: 'manipulation'
               }}
             >
               <CalendarPlus size={12} color="#FFFFFF" strokeWidth={2.4} />

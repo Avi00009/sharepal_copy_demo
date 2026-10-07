@@ -236,6 +236,9 @@ export default function DatePickerModal({
   return (
     <div className="sp-cal-overlay" onClick={onClose} role="dialog" aria-modal="true">
       <div className="sp-cal-modal-container" onClick={(e) => e.stopPropagation()}>
+        {/* Mobile Top Drag Handle */}
+        <div className="sp-cal-drag-handle" />
+
         {/* Top Header */}
         <div className="sp-cal-header">
           <h2 className="sp-cal-title">Select your Dates</h2>
@@ -245,49 +248,48 @@ export default function DatePickerModal({
             onClick={onClose}
             aria-label="Close date picker"
           >
-            <X size={16} />
+            <X size={18} />
           </button>
         </div>
 
-        {/* 2-Column Layout */}
+        {/* 2-Column / Stacked Layout */}
         <div className="sp-cal-body">
-          {/* Left Column: Inputs, Info Box, Rental Period, Savings Card, Continue */}
+          {/* Left Column / Mobile Top Stack */}
           <div className="sp-cal-left-col">
-            {/* Delivery Date & Pickup Date Inputs */}
-            <div className="sp-cal-inputs-row">
-              <div className="sp-cal-input-group">
-                <label className="sp-cal-input-label">
-                  Delivery Date <span className="sp-cal-required">*</span>
-                </label>
-                <div className="sp-cal-input-box">
-                  <Calendar size={15} className="sp-cal-input-icon" />
-                  <span className={`sp-cal-input-text ${selectedDelivery ? 'filled' : 'placeholder'}`}>
-                    {selectedDelivery ? formatDateDisplay(selectedDelivery) : 'Select delivery date'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="sp-cal-input-group">
-                <label className="sp-cal-input-label">
-                  Pickup Date <span className="sp-cal-required">*</span>
-                </label>
-                <div className="sp-cal-input-box">
-                  <Calendar size={15} className="sp-cal-input-icon" />
-                  <span className={`sp-cal-input-text ${selectedPickup ? 'filled' : 'placeholder'}`}>
-                    {selectedPickup ? formatDateDisplay(selectedPickup) : 'Select pickup date'}
-                  </span>
-                </div>
+            {/* Delivery Date */}
+            <div className="sp-cal-input-group">
+              <label className="sp-cal-input-label">
+                Delivery Date <span className="sp-cal-required">*</span>
+              </label>
+              <div className="sp-cal-input-box">
+                <Calendar size={16} className="sp-cal-input-icon" />
+                <span className={`sp-cal-input-text ${selectedDelivery ? 'filled' : 'placeholder'}`}>
+                  {selectedDelivery ? formatDateDisplay(selectedDelivery) : 'Select delivery date'}
+                </span>
               </div>
             </div>
 
-            {/* Same-day & delivery info banner */}
+            {/* Same-day & delivery info banner (Between Delivery & Pickup as in screenshot) */}
             <div className="sp-cal-info-card">
               <div className="sp-cal-info-icon-wrapper">
-                <Info size={15} />
+                <Info size={16} />
               </div>
               <p className="sp-cal-info-text">
                 <strong>Same-day delivery</strong> between <strong>5PM and 11PM</strong> For future dates, you can select a specific time slot available at checkout. We pickup between <strong>9AM to 1PM</strong>.
               </p>
+            </div>
+
+            {/* Pickup Date */}
+            <div className="sp-cal-input-group">
+              <label className="sp-cal-input-label">
+                Pickup Date <span className="sp-cal-required">*</span>
+              </label>
+              <div className="sp-cal-input-box">
+                <Calendar size={16} className="sp-cal-input-icon" />
+                <span className={`sp-cal-input-text ${selectedPickup ? 'filled' : 'placeholder'}`}>
+                  {selectedPickup ? formatDateDisplay(selectedPickup) : 'Select pickup date'}
+                </span>
+              </div>
             </div>
 
             {/* Your Rental Period Card */}
@@ -315,7 +317,7 @@ export default function DatePickerModal({
               <div className="sp-cal-savings-header">
                 <div className="sp-cal-savings-badge">
                   {/* Burst Coupon Badge SVG matching original image */}
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A3E635" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A3E635" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
                     <line x1="9" y1="15" x2="15" y2="9" />
                     <circle cx="9.5" cy="9.5" r="0.8" fill="#A3E635" />
@@ -329,15 +331,17 @@ export default function DatePickerModal({
               </p>
             </div>
 
-            {/* Continue Button */}
-            <button
-              type="button"
-              className="sp-cal-continue-btn"
-              onClick={handleContinue}
-              disabled={!rentalStats.valid}
-            >
-              Continue
-            </button>
+            {/* Desktop Continue Button */}
+            <div className="sp-cal-desktop-continue">
+              <button
+                type="button"
+                className="sp-cal-continue-btn"
+                onClick={handleContinue}
+                disabled={!rentalStats.valid}
+              >
+                Continue
+              </button>
+            </div>
           </div>
 
           {/* Right Column: 2-Month Dual Calendar with Clean White Card Container */}
@@ -455,6 +459,18 @@ export default function DatePickerModal({
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Mobile Sticky Footer with Continue Button */}
+        <div className="sp-cal-mobile-footer">
+          <button
+            type="button"
+            className="sp-cal-continue-btn"
+            onClick={handleContinue}
+            disabled={!rentalStats.valid}
+          >
+            Continue
+          </button>
         </div>
       </div>
     </div>
