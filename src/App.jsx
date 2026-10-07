@@ -21,6 +21,7 @@ import WhatsAppFloat from './components/WhatsAppFloat';
 import MobileBottomNav from './components/MobileBottomNav';
 import LoginModal from './components/LoginModal';
 import OfferBannerCarousel from './components/OfferBannerCarousel';
+import SharePalHomeHero from './components/SharePalHomeHero';
 import { productsData } from './data/products';
 
 export default function App() {
@@ -258,14 +259,18 @@ export default function App() {
         activeCategory={activeCategory}
         onSelectCategory={(catId) => {
           setActiveCategory(catId);
-          if (catId !== 'gaming') {
-            // Friendly prompt or preview
-            alert(`You selected ${catId.charAt(0).toUpperCase() + catId.slice(1)}! In this gaming assignment demo, gaming consoles remain active below.`);
-          }
         }}
       />
 
-      {/* 3. Hero Banner */}
+      {/* 2b. SharePal Homepage Hero with 3D Floating Gears & 4 Category Cards */}
+      <SharePalHomeHero
+        activeCategory={activeCategory}
+        onSelectCategory={(catId) => {
+          setActiveCategory(catId);
+        }}
+      />
+
+      {/* 3. Gaming Consoles Hero Banner */}
       <HeroBanner selectedCity={selectedCity} />
 
       {/* 3b. Moving Offer Banners Carousel */}
@@ -294,7 +299,7 @@ export default function App() {
       />
 
       {/* 6. Product Grid */}
-      <main className="sp-container">
+      <main className="sp-container" id="sp-catalog-section">
         {filteredProducts.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '4rem 1rem', background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', marginBottom: '3rem' }}>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1E293B', marginBottom: '0.5rem' }}>
