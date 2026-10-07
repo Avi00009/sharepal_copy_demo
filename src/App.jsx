@@ -22,6 +22,9 @@ import LoginModal from './components/LoginModal';
 import OfferBannerCarousel from './components/OfferBannerCarousel';
 import SharePalHomeHero from './components/SharePalHomeHero';
 import StickySubcategorySidebar from './components/StickySubcategorySidebar';
+import EarnCreditsBar from './components/EarnCreditsBar';
+import RentOutGearBanner from './components/RentOutGearBanner';
+import { ShoppingBag, ArrowRight } from 'lucide-react';
 import { productsData } from './data/products';
 
 export default function App() {
@@ -31,15 +34,15 @@ export default function App() {
   // Location & Dates
   const [selectedCity, setSelectedCity] = useState('Bangalore');
 
-  // Initial dates: tomorrow & +3 days (2 billable days)
+  // Initial dates: tomorrow & +7 days (6 billable days, exactly matching SharePal default)
   const getInitialDates = () => {
     const today = new Date();
     const dDeliv = new Date(today.getTime() + 86400000);
-    const dPick = new Date(dDeliv.getTime() + 3 * 86400000);
+    const dPick = new Date(dDeliv.getTime() + 7 * 86400000);
     return {
       delivery: dDeliv.toISOString().split('T')[0],
       pickup: dPick.toISOString().split('T')[0],
-      days: 2
+      days: 6
     };
   };
 
@@ -269,26 +272,12 @@ export default function App() {
         onOpenDateModal={() => setIsDateModalOpen(true)}
       />
 
-      {/* 4. Subcategory Pills */}
-      <SubcategoryTabs
-        activeSubcat={activeSubcat}
-        onSelectSubcat={setActiveSubcat}
-      />
+      {/* 4. Top Earn with SharePal Credits Bar */}
+      <div className="sp-container" style={{ marginBottom: '1.25rem' }}>
+        <EarnCreditsBar />
+      </div>
 
-      {/* 5. Search, Filter, Sort Toolbar */}
-      <SearchAndFilterBar
-        selectedCity={selectedCity}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        sortBy={sortBy}
-        onSortChange={setSortBy}
-        inStockOnly={inStockOnly}
-        onToggleInStock={() => setInStockOnly(!inStockOnly)}
-        totalItems={products.length}
-        filteredCount={filteredProducts.length}
-      />
-
-      {/* 6. Product Catalog with Sticky Subcategory Sidebar */}
+      {/* 5. Product Catalog with Sticky Subcategory Sidebar & 4-Column Grid */}
       <main className="sp-container" id="sp-catalog-section">
         <div className="sp-catalog-layout">
           {/* Left Column: Sticky Subcategory Sidebar matching exact SharePal UI */}
@@ -297,7 +286,7 @@ export default function App() {
             onSelectSubcat={setActiveSubcat}
           />
 
-          {/* Right Column: Products Grid */}
+          {/* Right Column: Products Grid & Mid-page Banner */}
           <div className="sp-products-main-col">
             {filteredProducts.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '4rem 1rem', background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', marginBottom: '3rem' }}>
@@ -320,24 +309,68 @@ export default function App() {
                 </button>
               </div>
             ) : (
-              <section className="sp-product-grid" aria-label="Available Gaming Consoles">
-                {filteredProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    billableDays={billableDays}
-                    isWishlisted={wishlist.includes(product.id)}
-                    onToggleWishlist={toggleWishlist}
-                    onSelectProduct={setDetailProduct}
-                    onAddToCart={addToCart}
-                    onVote={handleVote}
-                  />
-                ))}
-              </section>
+              <>
+                {/* First Row of Products (First 4 cards) */}
+                <section className="sp-exact-product-grid" aria-label="Available Gaming Consoles">
+                  {filteredProducts.slice(0, 4).map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      billableDays={billableDays}
+                      isWishlisted={wishlist.includes(product.id)}
+                      isInCart={cart.some((item) => item.id === product.id)}
+                      onToggleWishlist={toggleWishlist}
+                      onSelectProduct={setDetailProduct}
+                      onAddToCart={addToCart}
+                      onVote={handleVote}
+                    />
+                  ))}
+                </section>
+
+                {/* Wide Blue "Rent Out Your Gear on SharePal" Banner */}
+                <div style={{ margin: '1.75rem 0' }}>
+                  <RentOutGearBanner />
+                </div>
+
+                {/* Remaining Products */}
+                {filteredProducts.length > 4 && (
+                  <section className="sp-exact-product-grid" aria-label="More Gaming Consoles">
+                    {filteredProducts.slice(4).map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        billableDays={billableDays}
+                        isWishlisted={wishlist.includes(product.id)}
+                        isInCart={cart.some((item) => item.id === product.id)}
+                        onToggleWishlist={toggleWishlist}
+                        onSelectProduct={setDetailProduct}
+                        onAddToCart={addToCart}
+                        onVote={handleVote}
+                      />
+                    ))}
+                  </section>
+                )}
+              </>
             )}
           </div>
         </div>
       </main>
+
+      {/* Floating "Go to Cart" Lime Pill (Visible when items in cart, matching screenshot) */}
+      {cart.length > 0 && (
+        <div className="sp-floating-cart-wrapper">
+          <button
+            type="button"
+            className="sp-floating-cart-pill"
+            onClick={() => setIsCartOpen(true)}
+            title="Open cart to view items and checkout"
+          >
+            <ShoppingBag size={18} strokeWidth={2.5} />
+            <span>Go to Cart</span>
+            <ArrowRight size={16} strokeWidth={2.5} />
+          </button>
+        </div>
+      )}
 
       {/* 7. Stats Section (250Cr+ Saved, 4.5M Kg CO2, 100K+ Products) */}
       <StatsSection />

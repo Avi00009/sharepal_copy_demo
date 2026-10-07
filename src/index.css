@@ -2973,6 +2973,454 @@ img {
   border-radius: 0 !important;
 }
 
+/* ==========================================================================
+   EXACT SHAREPAL 4-COLUMN PRODUCT GRID & CARD INTERFACE
+   (Matching User Screenshot with Pixel Precision)
+   ========================================================================== */
+.sp-exact-product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .sp-exact-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .sp-exact-product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .sp-exact-product-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+}
+
+/* Product Card */
+.sp-exact-product-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 14px 14px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.sp-exact-product-card:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Badge Area */
+.sp-exact-badge-area {
+  min-height: 22px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.sp-exact-badge-new {
+  border: 1.5px solid #2563EB;
+  color: #2563EB;
+  background: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1.5px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  letter-spacing: -0.01em;
+}
+
+.sp-exact-badge-trending {
+  border: 1.5px solid #EA580C;
+  color: #EA580C;
+  background: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1.5px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  letter-spacing: -0.01em;
+}
+
+.sp-exact-badge-vote {
+  border: 1.5px solid #059669;
+  color: #059669;
+  background: #ECFDF5;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1.5px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+/* Image Wrap */
+.sp-exact-img-wrap {
+  width: 100%;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.sp-exact-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+}
+
+.sp-exact-product-card:hover .sp-exact-img {
+  transform: scale(1.04);
+}
+
+/* Title */
+.sp-exact-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 12px 0 14px 0;
+  line-height: 1.35;
+  min-height: 38px;
+  cursor: pointer;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.15s ease;
+}
+
+.sp-exact-title:hover {
+  color: #2563EB;
+}
+
+/* Divider */
+.sp-exact-card-divider {
+  border-top: 1px solid #F1F5F9;
+  margin-bottom: 12px;
+}
+
+/* Pricing Row */
+.sp-exact-pricing-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.sp-exact-pricing-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sp-exact-rent-days {
+  font-size: 0.76rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.sp-exact-rent-days strong {
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.sp-exact-price {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.sp-exact-gst-badge {
+  background: #9EFF00;
+  color: #000000;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+  margin-top: 4px;
+  letter-spacing: -0.01em;
+}
+
+/* Plus Button (matching screenshot (+)) */
+.sp-exact-plus-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid #0F172A;
+  background: #FFFFFF;
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.sp-exact-plus-btn:hover {
+  background: #0F172A;
+  color: #FFFFFF;
+  transform: scale(1.06);
+}
+
+.sp-exact-plus-btn.in-cart {
+  border-color: #2563EB;
+  background: #EFF6FF;
+}
+
+.sp-exact-out-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94A3B8;
+  background: #F1F5F9;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.sp-exact-vote-btn {
+  border: 1.5px solid #059669;
+  background: #ECFDF5;
+  color: #059669;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border-radius: 9999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sp-exact-vote-btn:hover {
+  background: #059669;
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   TOP EARN CREDITS BANNER (From user screenshot)
+   ========================================================================== */
+.sp-earn-credits-bar {
+  background: #0B132B;
+  border-radius: 14px;
+  padding: 10px 18px;
+  color: #FFFFFF;
+  width: 100%;
+}
+
+.sp-earn-content-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.sp-earn-items {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sp-earn-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+}
+
+.sp-earn-tag {
+  font-weight: 800;
+  color: #9EFF00;
+}
+
+.sp-earn-desc {
+  color: #CBD5E1;
+  font-weight: 500;
+}
+
+.sp-earn-sep {
+  color: #475569;
+  font-size: 0.75rem;
+}
+
+.sp-earn-btn {
+  background: #9EFF00;
+  color: #000000;
+  font-weight: 800;
+  font-size: 0.76rem;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.sp-earn-btn:hover {
+  background: #B6FF33;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   RENT OUT YOUR GEAR BANNER (Blue banner below 4 products in screenshot)
+   ========================================================================== */
+.sp-rent-out-banner {
+  background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 50%, #1E40AF 100%);
+  border-radius: 20px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  color: #FFFFFF;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+}
+
+.sp-rent-out-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+  margin: 0 auto;
+  gap: 6px;
+}
+
+.sp-rent-out-sub {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #DBEAFE;
+}
+
+.sp-underline-wavy {
+  text-decoration: underline;
+  text-decoration-color: #9EFF00;
+  text-underline-offset: 3px;
+}
+
+.sp-rent-out-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 2px 0 10px 0;
+  letter-spacing: -0.02em;
+}
+
+.sp-rent-out-btn {
+  background: #9EFF00;
+  color: #000000;
+  font-weight: 800;
+  font-size: 0.88rem;
+  padding: 9px 22px;
+  border-radius: 9999px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 14px rgba(158, 255, 0, 0.35);
+}
+
+.sp-rent-out-btn:hover {
+  background: #B6FF33;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(158, 255, 0, 0.45);
+}
+
+.sp-rent-out-gears {
+  display: none;
+  align-items: center;
+  gap: 16px;
+  z-index: 1;
+}
+
+@media (min-width: 900px) {
+  .sp-rent-out-gears {
+    display: flex;
+  }
+}
+
+.sp-gear-float-img {
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.sp-gear-float-img.drone {
+  width: 140px;
+  height: 90px;
+}
+
+.sp-gear-float-img.wheel {
+  width: 95px;
+  height: 95px;
+}
+
+.sp-gear-float-img.controller {
+  width: 110px;
+  height: 90px;
+}
+
+.sp-gear-float-img.camera {
+  width: 90px;
+  height: 90px;
+}
+
+/* ==========================================================================
+   FLOATING LIME "GO TO CART" PILL (Shown in screenshot)
+   ========================================================================== */
+.sp-floating-cart-wrapper {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 990;
+}
+
+.sp-floating-cart-pill {
+  background: #9EFF00;
+  color: #000000;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.28), 0 0 15px rgba(158, 255, 0, 0.5);
+  transition: all 0.2s ease;
+  animation: spFloatPulse 2.5s infinite ease-in-out;
+}
+
+.sp-floating-cart-pill:hover {
+  background: #B6FF33;
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(158, 255, 0, 0.8);
+}
+
+
 
 
 

@@ -1,5 +1,43 @@
-// SharePal Products Data - Sourced from product-list.json
 export const productsData = [
+  {
+    "id": 37501,
+    "name": "PS5 + FC27 + 1 Controller",
+    "image": "https://images.sharepal.in/categories/gaming-consoles/ps5/ps5-fifa27-1-controller/ps5-with-fifa-27-with-1-controller-on-rent-sharepal-1.webp",
+    "rating": 0,
+    "booked_count": 658,
+    "tag": "New",
+    "per_day_rent": 250,
+    "out_of_stock": false,
+    "subcategory": "PS5 Console",
+    "controllers": 1,
+    "hasGames": true
+  },
+  {
+    "id": 37512,
+    "name": "PS5 + FC27 + 2 Controllers",
+    "image": "https://images.sharepal.in/categories/gaming-consoles/ps5/ps5-fifa27-2-controllers/ps5-with-fifa-27-with-2-controllers-on-rent-sharepal-1.webp",
+    "rating": 0,
+    "booked_count": 652,
+    "tag": "New",
+    "per_day_rent": 300,
+    "out_of_stock": false,
+    "subcategory": "PS5 Console",
+    "controllers": 2,
+    "hasGames": true
+  },
+  {
+    "id": 37534,
+    "name": "PS5 + FC27 + 4 Controllers",
+    "image": "https://images.sharepal.in/categories/gaming-consoles/ps5/ps5-fifa27-4-controllers/ps5-with-fifa-27-with-4-controllers-on-rent-sharepal-1.webp",
+    "rating": 0,
+    "booked_count": 651,
+    "tag": "New",
+    "per_day_rent": 350,
+    "out_of_stock": false,
+    "subcategory": "PS5 Console",
+    "controllers": 4,
+    "hasGames": true
+  },
   {
     "id": 18273,
     "name": "PS5 + Games (100+) + 1 Controller",
@@ -11,21 +49,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 1,
-    "hasGames": true,
-    "description": "Rent the official PS5 + Games (100+) + 1 Controller in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 20242,
@@ -38,21 +62,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 2,
-    "hasGames": false,
-    "description": "Rent the official PS5 All in one Combo + 2 Controllers in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "2x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Ready for your PSN Account login"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": false
   },
   {
     "id": 18255,
@@ -65,21 +75,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 2,
-    "hasGames": true,
-    "description": "Rent the official PS5 + Games (100+) + 2 Controllers in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "2x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 20105,
@@ -92,21 +88,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 2,
-    "hasGames": true,
-    "description": "Rent the official FC25 + 2 Controllers Combo in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "2x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 8185,
@@ -119,21 +101,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 1,
-    "hasGames": true,
-    "description": "Rent the official PS5 + 1 Controller (Disc or Digital) (No Games Included) in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 18117,
@@ -146,21 +114,7 @@ export const productsData = [
     "out_of_stock": true,
     "subcategory": "PS5 Console",
     "controllers": 2,
-    "hasGames": false,
-    "description": "Rent the official PS5 + EA Play + 2 Controllers in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "2x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Ready for your PSN Account login"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": false
   },
   {
     "id": 19716,
@@ -173,21 +127,7 @@ export const productsData = [
     "out_of_stock": true,
     "subcategory": "PS5 Console",
     "controllers": 1,
-    "hasGames": false,
-    "description": "Rent the official PS5 All in one Combo + 1 Controller in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Ready for your PSN Account login"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": false
   },
   {
     "id": 19680,
@@ -200,21 +140,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 2,
-    "hasGames": true,
-    "description": "Rent the official PS5 + 2 Controllers (Disc or Digital) (No Games Included) in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "2x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 17795,
@@ -227,21 +153,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 1,
-    "hasGames": true,
-    "description": "Rent the official God Of War Ragnarök + 1 Controller (Digital Game) in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 18055,
@@ -254,21 +166,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 1,
-    "hasGames": false,
-    "description": "Rent the official PS5 + EA Play + 1 Controller in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Ready for your PSN Account login"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": false
   },
   {
     "id": 20104,
@@ -281,21 +179,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 1,
-    "hasGames": true,
-    "description": "Rent the official Uncharted Series + 1 Controller (Digital Game) in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 20103,
@@ -308,21 +192,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 2,
-    "hasGames": true,
-    "description": "Rent the official Cricket 24 + 2 Controllers (Digital Game) in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "2x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": false
   },
   {
     "id": 36028,
@@ -335,21 +205,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 1,
-    "hasGames": true,
-    "description": "Rent the official PS5 + FC26 + 1 Controller in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 20102,
@@ -362,21 +218,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 1,
-    "hasGames": false,
-    "description": "Rent the official Ghost of Tsushima + 1 Controller (Digital Game) in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Ready for your PSN Account login"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": false
   },
   {
     "id": 20224,
@@ -389,21 +231,7 @@ export const productsData = [
     "out_of_stock": true,
     "subcategory": "Racing Wheel",
     "controllers": 1,
-    "hasGames": false,
-    "description": "Rent the official PS5 Mega Racing Wheel Combo in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Ready for your PSN Account login"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": false
   },
   {
     "id": 36039,
@@ -416,21 +244,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 2,
-    "hasGames": true,
-    "description": "Rent the official PS5 + FC26 + 2 Controllers in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "2x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 20098,
@@ -443,21 +257,7 @@ export const productsData = [
     "out_of_stock": true,
     "subcategory": "PS5 Console",
     "controllers": 2,
-    "hasGames": true,
-    "description": "Rent the official FC24 + 2 Controllers (Digital Game) in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "2x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 36050,
@@ -470,21 +270,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 4,
-    "hasGames": true,
-    "description": "Rent the official PS5 + FC26 + 4 Controllers in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "4x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": true
   },
   {
     "id": 20100,
@@ -497,102 +283,7 @@ export const productsData = [
     "out_of_stock": false,
     "subcategory": "PS5 Console",
     "controllers": 1,
-    "hasGames": true,
-    "description": "Rent the official Spider-Man Miles Morales + 1 Controller (Digital Game) in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
-  },
-  {
-    "id": 37512,
-    "name": "PS5 + FC27 + 2 Controllers",
-    "image": "https://images.sharepal.in/categories/gaming-consoles/ps5/ps5-fifa27-2-controllers/ps5-with-fifa-27-with-2-controllers-on-rent-sharepal-1.webp",
-    "rating": 0,
-    "booked_count": 652,
-    "tag": "New",
-    "per_day_rent": 300,
-    "out_of_stock": false,
-    "subcategory": "GTA VI",
-    "controllers": 2,
-    "hasGames": true,
-    "description": "Rent the official PS5 + FC27 + 2 Controllers in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "2x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
-  },
-  {
-    "id": 37501,
-    "name": "PS5 + FC27 + 1 Controller",
-    "image": "https://images.sharepal.in/categories/gaming-consoles/ps5/ps5-fifa27-1-controller/ps5-with-fifa-27-with-1-controller-on-rent-sharepal-1.webp",
-    "rating": 0,
-    "booked_count": 658,
-    "tag": "New",
-    "per_day_rent": 250,
-    "out_of_stock": false,
-    "subcategory": "GTA VI",
-    "controllers": 1,
-    "hasGames": true,
-    "description": "Rent the official PS5 + FC27 + 1 Controller in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
-  },
-  {
-    "id": 37534,
-    "name": "PS5 + FC27 + 4 Controllers",
-    "image": "https://images.sharepal.in/categories/gaming-consoles/ps5/ps5-fifa27-4-controllers/ps5-with-fifa-27-with-4-controllers-on-rent-sharepal-1.webp",
-    "rating": 0,
-    "booked_count": 651,
-    "tag": "New",
-    "per_day_rent": 350,
-    "out_of_stock": false,
-    "subcategory": "GTA VI",
-    "controllers": 4,
-    "hasGames": true,
-    "description": "Rent the official PS5 + FC27 + 4 Controllers in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "4x DualSense Wireless Controllers",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Pre-loaded Premium Game Library / PS Plus Deluxe"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": false
   },
   {
     "id": 37616,
@@ -603,22 +294,8 @@ export const productsData = [
     "tag": "Vote to Launch",
     "per_day_rent": 158.25,
     "out_of_stock": false,
-    "subcategory": "VR",
+    "subcategory": "PS5 Console",
     "controllers": 1,
-    "hasGames": false,
-    "description": "Rent the official PlayStation Portal Remote Player in pristine condition. Zero security deposit required, sanitized packaging, HDMI cable and power adapter included.",
-    "inclusions": [
-      "Original Sony PlayStation 5 Console",
-      "1x DualSense Wireless Controller",
-      "High-Speed HDMI 2.1 Cable & Power Cord",
-      "Controller USB-C Charging Cable",
-      "Ready for your PSN Account login"
-    ],
-    "features": [
-      "Ultra-high speed 825GB SSD for lightning-fast loads",
-      "Haptic feedback & Adaptive Triggers on DualSense",
-      "Ray Tracing & 4K 120Hz HDR display support",
-      "Tempest 3D AudioTech immersion"
-    ]
+    "hasGames": false
   }
 ];
