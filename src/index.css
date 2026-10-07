@@ -141,23 +141,24 @@ img {
 
 .sp-logo-wrapper {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: flex-start;
+  align-self: stretch;
 }
 
 .sp-logo-badge {
-  background: #3B1161;
-  padding: 8px 16px;
+  background: #1945E8;
+  margin-top: -0.65rem;
+  padding: 10px 22px 14px 22px;
   border-radius: 0 0 16px 16px;
   display: flex;
   align-items: center;
   gap: 2px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transition: transform var(--transition-fast);
+  box-shadow: 0 6px 16px rgba(25, 69, 232, 0.4);
+  transition: transform var(--transition-fast), background var(--transition-fast);
 }
 
 .sp-logo-badge:hover {
-  transform: translateY(-2px);
+  background: #143AC7;
 }
 
 .sp-header-center {

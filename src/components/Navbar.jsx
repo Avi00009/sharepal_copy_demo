@@ -32,7 +32,7 @@ export default function Navbar({
           {/* Logo */}
           <div className="sp-logo-wrapper">
             <a href="#" className="sp-logo-badge" title="SharePal Home">
-              <SharePalLogo height={24} />
+              <SharePalLogo height={26} />
             </a>
           </div>
 
