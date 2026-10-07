@@ -1575,32 +1575,150 @@ img {
 /* ==========================================================================
    WHATSAPP & MOBILE BOTTOM NAV
    ========================================================================== */
-.sp-whatsapp-float {
+/* ==========================================================================
+   OFFICIAL SHAREPAL FLOATING CHAT BUBBLES WIDGET & ANIMATIONS
+   ========================================================================== */
+.sp-chat-float-wrapper {
   position: fixed;
-  bottom: 80px;
-  right: 20px;
-  z-index: 45;
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-full);
-  background: #25D366;
-  color: #FFFFFF;
+  bottom: 74px;
+  right: 14px;
+  z-index: 999;
+  width: 78px;
+  height: 78px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-  transition: all var(--transition-bounce);
+  animation: spFloatBob 3.2s ease-in-out infinite;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+  filter: drop-shadow(0 8px 18px rgba(24, 69, 231, 0.28)) drop-shadow(0 3px 8px rgba(157, 255, 0, 0.25));
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.sp-whatsapp-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+.sp-chat-float-wrapper:hover {
+  transform: translateY(-8px) scale(1.1);
+  filter: drop-shadow(0 14px 26px rgba(24, 69, 231, 0.42)) drop-shadow(0 6px 14px rgba(157, 255, 0, 0.35));
+}
+
+@media (min-width: 768px) {
+  .sp-chat-float-wrapper {
+    bottom: 26px;
+    right: 24px;
+    width: 90px;
+    height: 90px;
+  }
 }
 
 @media (min-width: 1024px) {
-  .sp-whatsapp-float {
+  .sp-chat-float-wrapper {
     bottom: 30px;
+    right: 28px;
+    width: 98px;
+    height: 98px;
   }
+}
+
+.sp-chat-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+/* 1. Continuous Floating Bob Animation */
+@keyframes spFloatBob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* 2. Green Bubble Breathing / Peeking Pulse */
+@keyframes spGreenBubblePulse {
+  0%, 100% {
+    transform: translate(195px, 185px) scale(1.05) rotate(0deg);
+  }
+  50% {
+    transform: translate(192px, 180px) scale(1.09) rotate(-3deg);
+  }
+}
+
+.sp-bubble-green {
+  animation: spGreenBubblePulse 3.5s ease-in-out infinite;
+  transform-origin: 195px 185px;
+}
+
+/* 3. Blue Bubble Gentle Spring */
+@keyframes spBlueBubblePop {
+  0%, 100% {
+    transform: translate(295px, 290px) scale(1.15);
+  }
+  50% {
+    transform: translate(295px, 290px) scale(1.18);
+  }
+}
+
+.sp-bubble-blue {
+  animation: spBlueBubblePop 3.5s ease-in-out infinite;
+  transform-origin: 295px 290px;
+}
+
+/* 4. Typing Indicator Wave Animation on 3 White Dots */
+@keyframes spDotWave {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+  30% {
+    transform: translateY(-9px);
+    opacity: 1;
+  }
+}
+
+.sp-chat-dot {
+  transform-origin: center;
+}
+
+.sp-dot-1 {
+  animation: spDotWave 1.4s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.sp-dot-2 {
+  animation: spDotWave 1.4s ease-in-out infinite;
+  animation-delay: 0.22s;
+}
+
+.sp-dot-3 {
+  animation: spDotWave 1.4s ease-in-out infinite;
+  animation-delay: 0.44s;
+}
+
+/* Hover Tooltip Badge */
+.sp-chat-tooltip {
+  position: absolute;
+  right: calc(100% + 4px);
+  background: #0F172A;
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: -0.01em;
+}
+
+.sp-chat-float-wrapper:hover .sp-chat-tooltip {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .sp-mobile-nav {
