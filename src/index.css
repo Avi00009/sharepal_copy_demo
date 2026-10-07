@@ -3420,6 +3420,258 @@ img {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(158, 255, 0, 0.8);
 }
 
+/* ==========================================================================
+   OFFICIAL SHAREPAL FOOTER (Exact Midnight Navy Color & Content)
+   ========================================================================== */
+.sp-exact-footer {
+  background: #020718;
+  color: #94A3B8;
+  padding: 56px 0 28px 0;
+  margin-top: 4.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: inherit;
+}
+
+/* Top Bangalore SEO & Rental Description Section */
+.sp-footer-seo-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 32px;
+}
+
+.sp-footer-seo-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sp-footer-seo-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.01em;
+}
+
+.sp-footer-category-heading {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.sp-footer-subcat-heading {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin: 2px 0 4px 0;
+}
+
+.sp-footer-seo-paragraph {
+  font-size: 0.77rem;
+  color: #94A3B8;
+  line-height: 1.65;
+  margin: 0;
+  max-width: 1080px;
+}
+
+.sp-footer-readmore-trigger {
+  background: none;
+  border: none;
+  color: #94A3B8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  margin-top: 4px;
+  width: fit-content;
+  transition: color 0.15s ease;
+}
+
+.sp-footer-readmore-trigger:hover {
+  color: #FFFFFF;
+}
+
+/* Logo Row */
+.sp-footer-logo-row {
+  margin-bottom: 28px;
+}
+
+/* 5-Column Navigation Grid */
+.sp-footer-columns-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 580px) {
+  .sp-footer-columns-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 860px) {
+  .sp-footer-columns-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .sp-footer-columns-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+  }
+}
+
+.sp-footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sp-footer-nav-heading {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.01em;
+}
+
+.sp-footer-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sp-footer-nav-list a {
+  color: #94A3B8;
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: color 0.15s ease;
+  display: inline-block;
+}
+
+.sp-footer-nav-list a:hover {
+  color: #FFFFFF;
+}
+
+.sp-footer-link-with-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sp-footer-pill-new {
+  background: #9EFF00;
+  color: #000000;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 9999px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.sp-footer-icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #94A3B8;
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: color 0.15s ease;
+}
+
+.sp-footer-icon-link:hover {
+  color: #FFFFFF;
+}
+
+/* Social Row */
+.sp-footer-social-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.sp-footer-social-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #CBD5E1;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.sp-footer-social-btn:hover {
+  background: #2563EB;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+/* Bottom Bar */
+.sp-footer-bottom-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 0.78rem;
+  color: #64748B;
+}
+
+.sp-footer-go-up-btn {
+  background: none;
+  border: none;
+  color: #94A3B8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px;
+  transition: color 0.15s ease;
+}
+
+.sp-footer-go-up-btn:hover {
+  color: #FFFFFF;
+}
+
+.sp-footer-copyright {
+  color: #94A3B8;
+  font-weight: 500;
+}
+
+.sp-footer-made-in-india {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #94A3B8;
+}
+
+
 
 
 

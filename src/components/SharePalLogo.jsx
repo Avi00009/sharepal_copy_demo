@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SharePalLogo({ height = 24 }) {
+export default function SharePalLogo({ height = 24, shareColor = "#FFFFFF", palColor = "#9EFF00" }) {
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
       {/* Share SVG */}
@@ -8,7 +8,7 @@ export default function SharePalLogo({ height = 24 }) {
         xmlns="http://www.w3.org/2000/svg"
         height={height}
         viewBox="0 0 86 27"
-        fill="#FFFFFF"
+        fill={shareColor}
         style={{ display: 'block' }}
       >
         <path
@@ -23,7 +23,7 @@ export default function SharePalLogo({ height = 24 }) {
         xmlns="http://www.w3.org/2000/svg"
         height={height}
         viewBox="0 0 51 27"
-        fill="#9EFF00"
+        fill={palColor}
         style={{ display: 'block' }}
       >
         <path
