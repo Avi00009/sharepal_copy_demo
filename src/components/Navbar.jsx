@@ -11,7 +11,9 @@ export default function Navbar({
   onOpenDateModal,
   cartCount,
   onOpenCart,
-  onOpenSearch
+  onOpenSearch,
+  currentUser,
+  onOpenLoginModal
 }) {
   const formatDateDisplay = (dateStr) => {
     if (!dateStr) return null;
@@ -103,12 +105,19 @@ export default function Navbar({
             <button
               type="button"
               className="sp-user-login-btn"
-              onClick={() => alert("Sign in / OTP verification demo: Ready for Instant Checkout!")}
+              onClick={onOpenLoginModal}
+              title={currentUser ? "View Profile & Bookings" : "Sign in / Register"}
             >
-              <div className="sp-user-avatar">
-                <User size={18} />
+              <div className="sp-user-avatar" style={{ fontWeight: 700, fontSize: '0.8rem' }}>
+                {currentUser ? (
+                  currentUser.name.charAt(0).toUpperCase()
+                ) : (
+                  <User size={18} />
+                )}
               </div>
-              <span style={{ fontSize: '0.85rem' }}>Hi, Login</span>
+              <span style={{ fontSize: '0.85rem' }}>
+                {currentUser ? `Hi, ${currentUser.name.split(' ')[0]}` : 'Hi, Login'}
+              </span>
             </button>
           </div>
         </div>
@@ -151,7 +160,9 @@ export default function Navbar({
                 {cartCount > 0 && <span className="sp-cart-badge">{cartCount}</span>}
               </button>
 
-              <div
+              <button
+                type="button"
+                onClick={onOpenLoginModal}
                 style={{
                   width: '28px',
                   height: '28px',
@@ -160,11 +171,16 @@ export default function Navbar({
                   color: '#4C187C',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  fontWeight: 700,
+                  fontSize: '0.75rem',
+                  border: 'none',
+                  cursor: 'pointer'
                 }}
+                aria-label="User account"
               >
-                <User size={16} />
-              </div>
+                {currentUser ? currentUser.name.charAt(0).toUpperCase() : <User size={16} />}
+              </button>
             </div>
           </div>
 

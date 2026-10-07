@@ -19,6 +19,7 @@ import DirectoryLinks from './components/DirectoryLinks';
 import Footer from './components/Footer';
 import WhatsAppFloat from './components/WhatsAppFloat';
 import MobileBottomNav from './components/MobileBottomNav';
+import LoginModal from './components/LoginModal';
 import { productsData } from './data/products';
 
 export default function App() {
@@ -56,7 +57,30 @@ export default function App() {
   const [isCityModalOpen, setIsCityModalOpen] = useState(false);
   const [isDateModalOpen, setIsDateModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [detailProduct, setDetailProduct] = useState(null);
+
+  // User Authentication
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('sp_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      if (currentUser) {
+        localStorage.setItem('sp_user', JSON.stringify(currentUser));
+      } else {
+        localStorage.removeItem('sp_user');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [currentUser]);
 
   // Wishlist
   const [wishlist, setWishlist] = useState(() => {
@@ -223,6 +247,8 @@ export default function App() {
           window.scrollTo({ top: 380, behavior: 'smooth' });
           document.querySelector('.sp-search-input')?.focus();
         }}
+        currentUser={currentUser}
+        onOpenLoginModal={() => setIsLoginModalOpen(true)}
       />
 
       {/* 2. Top Category Switcher */}
@@ -365,6 +391,14 @@ export default function App() {
         deliveryDate={deliveryDate}
         pickupDate={pickupDate}
         onOpenDateModal={() => setIsDateModalOpen(true)}
+      />
+
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        currentUser={currentUser}
+        onLoginSuccess={(userObj) => setCurrentUser(userObj)}
+        onLogout={() => setCurrentUser(null)}
       />
     </div>
   );
